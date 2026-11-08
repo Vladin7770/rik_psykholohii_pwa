@@ -14,7 +14,8 @@ new vm.Script(source);
 
 function harness(initial, options = {}) {
   const storage = new Map(initial === undefined ? [] : [[KEY, initial]]);
-  const nodes = new Map(), documentEvents = {}, windowEvents = {};
+  const nodes = new Map(), documentEvents = {}, windowEvents = {}, timeouts = new Map();
+  let timeoutID = 0;
   const clock = { now: options.now === undefined ? Date.now() : options.now };
   class TestDate extends Date {
     constructor(...args) { super(...(args.length ? args : [clock.now])); }
@@ -65,7 +66,7 @@ function harness(initial, options = {}) {
   ['side', 'main', 'mobile-nav', 'matdlg', 'command-dialog', 'goal-dialog', 'attach-dialog', 'card-dialog', 'recall-dialog', 'app-manifest', 'toast', 'body', 'topbar', 'menu', 'sync'].forEach(node);
   context = {
     document: {
-      activeElement: null, body: node('body'), documentElement:node('html'),
+      activeElement: null, visibilityState:'visible', body: node('body'), documentElement:node('html'),
       getElementById: id => nodes.get(id) || null,
       querySelector: selector => selector === '.topbar' ? node('topbar') : selector === '.topbar [data-a="menu"]' ? node('menu') : nodes.get(selector.slice(1)) || null,
       querySelectorAll: selector => selector === '[data-resource]' ? resourceNodes : selector === '.sync' ? [node('sync')] : selector.includes('[data-a="menu"]') ? [node('menu')] : [],
@@ -77,7 +78,7 @@ function harness(initial, options = {}) {
     },
     location: { hash: options.hash || '#overview', protocol: 'http:', hostname: 'localhost', reload(){context.reloaded=true} },
     navigator: options.navigator || {}, URL, Date: TestDate,
-    setTimeout: () => 1, clearTimeout() {}, setInterval: () => 1, clearInterval() {},
+    setTimeout: (fn,ms) => {const id=++timeoutID;timeouts.set(id,{fn,ms});return id}, clearTimeout(id) {timeouts.delete(id)}, setInterval: () => 1, clearInterval() {},
     matchMedia: query => ({ matches: query.includes('color-scheme') ? !!options.dark : true }), scrollY: 0,
     scrollTo(first, second) { context.lastScroll = typeof first === 'object' ? first : { left: first, top: second }; context.scrollY = +context.lastScroll.top || 0; },
     addEventListener: (type, fn) => (windowEvents[type] ||= []).push(fn),
@@ -87,7 +88,15 @@ function harness(initial, options = {}) {
   context.window = context;
   vm.createContext(context);
   const instrumented = source.replace(/\}\)\(\);\s*$/, `
-    globalThis.api={setTheme,applyTheme,themeSettingHTML,restoreTimers,focusTick,focusCredit,applyPWAUpdate,hasUnsavedDraft,pwaNoticeHTML,
+    globalThis.api={norm,toolDraft,toolDraftKey,writeToolDraft,saveTool,learningDelete,ideaToNote,learningCard,
+      vLearningRecords,vResearch,vCases,vConcepts,vCritical,vExperiments,vSessions,readingControlsHTML,moduleExplanationHTML,
+      searchNorm,searchNear,searchRank,searchHighlight,executeCommand,renderCommandResults,openCommand,
+      criticalChoose,criticalReveal,startLearningSession,finishLearningSession,completeLearningSession,
+      startExperiment,experimentNext,stroopAnswer,memoryAnswer,pauseExperiment,experimentSummary,experimentExplanation,
+      changeReading,applyReading,focusLearningContext,renderPageNavigation,conceptItems,
+      get experiment(){return EXP},get tools(){return LEARN_TOOLS},get criticalTasks(){return CRITICAL_TASKS},
+      get commands(){return CMD_ITEMS},get explanations(){return MODULE_EXPLANATIONS},
+      setTheme,applyTheme,themeSettingHTML,restoreTimers,focusTick,focusCredit,applyPWAUpdate,hasUnsavedDraft,pwaNoticeHTML,
       get pwaReg(){return PWA_REG},set pwaReg(v){PWA_REG=v},get pwaUpdating(){return PWA_UPDATING},fresh,validateState,decodeBackup,applyBackup,saveLocal,importBackup,
       route,primaryNavHTML,moduleSwitcherHTML,vModules,vLibrary,refreshLib,render,setMenu,
       allResources,seedLearningContent,commandMatches,
@@ -109,7 +118,8 @@ function harness(initial, options = {}) {
     })();`);
   assert.notEqual(instrumented, source);
   new vm.Script(instrumented).runInContext(context);
-  return { api: context.api, context, storage, nodes, documentEvents, windowEvents, clock };
+  return { api: context.api, context, storage, nodes, documentEvents, windowEvents, clock, timeouts,
+    runTimeout(ms) {const pair=[...timeouts].find(([,t])=>t.ms===ms);assert.ok(pair,'scheduled timeout '+ms);timeouts.delete(pair[0]);pair[1].fn()} };
 }
 
 function legacyState() {
