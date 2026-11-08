@@ -1,0 +1,20 @@
+{
+  "name": "Рік психології",
+  "short_name": "Психологія",
+  "description": "Особиста навчальна програма з психології",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF9F6",
+  "theme_color": "#2F5D62",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"%3E%3Crect width=\"512\" height=\"512\" rx=\"112\" fill=\"%232F5D62\"/%3E%3Cpath d=\"M256 82c-94 0-170 76-170 170s76 170 170 170 170-76 170-170S350 82 256 82Zm0 42a128 128 0 1 1 0 256 128 128 0 0 1 0-256Z\" fill=\"%23FAF9F6\"/%3E%3Cpath d=\"M256 154v98l70 44\" fill=\"none\" stroke=\"%23FAF9F6\" stroke-width=\"24\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
