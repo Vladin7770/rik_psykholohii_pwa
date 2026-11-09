@@ -87,8 +87,9 @@ function harness(initial, options = {}) {
   };
   context.window = context;
   vm.createContext(context);
+  for(const file of ['content/curriculum.js','content/academic-core.js','content/academic-ui.js'])new vm.Script(fs.readFileSync(path.join(__dirname,'..',file),'utf8')).runInContext(context);
   const instrumented = source.replace(/\}\)\(\);\s*$/, `
-    globalThis.api={norm,toolDraft,toolDraftKey,writeToolDraft,saveTool,learningDelete,ideaToNote,learningCard,
+    globalThis.api={academic:ACADEMIC_UI,norm,toolDraft,toolDraftKey,writeToolDraft,saveTool,learningDelete,ideaToNote,learningCard,
       vLearningRecords,vResearch,vCases,vConcepts,vCritical,vExperiments,vSessions,readingControlsHTML,moduleExplanationHTML,
       searchNorm,searchNear,searchRank,searchHighlight,executeCommand,renderCommandResults,openCommand,
       criticalChoose,criticalReveal,startLearningSession,finishLearningSession,completeLearningSession,
@@ -143,7 +144,7 @@ test('Normal startup renders the app with a three-tab navigation', () => {
   const h = harness();
   assert.match(h.nodes.get('main').innerHTML, /<h1>Сьогодні<\/h1>/);
   const nav = h.nodes.get('mobile-nav').innerHTML;
-  assert.deepEqual([...nav.matchAll(/href="#([^"]+)"/g)].map(x => x[1]), ['overview', 'modules', 'library']);
+  assert.deepEqual([...nav.matchAll(/href="#([^"]+)"/g)].map(x => x[1]), ['overview', 'academic', 'library']);
   assert.equal(h.api.allResources().length, 121);
   assert.equal(h.api.state.cards.length, 120);
 });
@@ -271,7 +272,7 @@ test('Each module activates the modules tab and offers twelve direct module link
   const h = harness();
   for (let n = 1; n <= 12; n++) {
     h.context.location.hash = '#m' + n;
-    assert.match(h.api.primaryNavHTML(true), /href="#modules" aria-current="page"/);
+    assert.match(h.api.primaryNavHTML(true), /href="#academic" aria-current="page"/);
     assert.equal([...h.api.moduleSwitcherHTML(n).matchAll(/href="#m\d+"/g)].length, 12);
   }
   assert.equal([...h.api.vModules().matchAll(/class="module-link"/g)].length, 12);

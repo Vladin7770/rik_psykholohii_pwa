@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { publicConfig, configScript } from '../scripts/public-config.mjs';
 import { createRequire } from 'node:module';
 import vm from 'node:vm';
+import { createHash } from 'node:crypto';
 
 const require=createRequire(import.meta.url);
 const root=new URL('../',import.meta.url);
@@ -30,8 +31,11 @@ test('The production build bundles the SDK locally, includes all shell files and
  const sw=await readFile(new URL('dist/service-worker.js',root),'utf8');
  const runtime=await readFile(new URL('dist/runtime-config.js',root),'utf8');const bundle=await readFile(new URL('dist/auth.js',root),'utf8');
  assert.match(runtime,/sb_publishable_test_public/);assert.match(bundle,/signInWithPassword/);assert.doesNotMatch(bundle,/from[ '\"]+https?:\/\//);
- const shell=[...sw.match(/const SHELL = \[([^\]]+)\]/)[1].matchAll(/'([^']+)'/g)].map(x=>x[1]);assert.equal(shell.length,6);
+ const shell=[...sw.match(/const SHELL = \[([^\]]+)\]/)[1].matchAll(/'([^']+)'/g)].map(x=>x[1]);assert.equal(shell.length,9);
  for(const file of [...shell,'service-worker.js'])assert.ok((await stat(new URL('dist/'+file,root))).size>0);
+ const fingerprint=createHash('sha256').update(bundle).update(runtime).update(await readFile(new URL('service-worker.js',root),'utf8'));
+ for(const file of ['index.html','manifest.webmanifest','icon-192.png','icon-512.png','content/curriculum.js','content/academic-core.js','content/academic-ui.js'])fingerprint.update(await readFile(new URL(file,root)));
+ assert.ok(sw.includes(fingerprint.digest('hex').slice(0,16)),'content and both code assets participate in the release fingerprint');
  const html=await readFile(new URL('dist/index.html',root),'utf8');assert.match(html,/<script defer src="\.\/runtime-config.js"><\/script>\s*<script defer src="\.\/auth.js">/);
  execFileSync(process.execPath,['scripts/build.mjs'],{cwd:root,env:{...env,SUPABASE_ANON_KEY:'sb_publishable_changed'},stdio:'pipe'});
  assert.notEqual((await readFile(new URL('dist/service-worker.js',root),'utf8')).match(/const BUILD = '([^']+)'/)[1],sw.match(/const BUILD = '([^']+)'/)[1]);

@@ -5,7 +5,8 @@
   "description": "Україномовна навчальна PWA з локальними даними та Supabase Auth",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node tests/learning-tools.test.cjs && node --test tests/auth.test.mjs tests/build.test.mjs"
+    "test": "node tests/learning-tools.test.cjs && node --test tests/auth.test.mjs tests/build.test.mjs tests/academic.test.cjs",
+    "validate:content": "node scripts/validate-academic.cjs"
   },
   "engines": {
     "node": ">=22"

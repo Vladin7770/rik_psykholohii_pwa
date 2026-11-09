@@ -138,12 +138,12 @@ test('Both theme palettes meet text and control contrast',()=>{
   ]){for(const key of ['ink','secondary','danger'])assert.ok(contrast(p[key],p.surface)>=4.5,key);assert.ok(contrast(p.accent,p.onAccent)>=4.5);assert.ok(contrast(p.border,p.surface)>=3)}
 });
 
-function workerHarness({active=true,failAsset=false,scope='https://local.test/'}={}) {
+function workerHarness({active=true,failAsset=false,failPath='',scope='https://local.test/'}={}) {
   const events={}, stores=new Map(),deleted=[],network=[];let skip=0,claimed=0;
   const key=x=>typeof x==='string'?x:x.url;
   const caches={async open(name){if(!stores.has(name))stores.set(name,new Map());const map=stores.get(name);return {async put(k,v){map.set(key(k),v.clone())},async match(k){return map.get(key(k))?.clone()}}},async keys(){return [...stores.keys()]},async delete(k){deleted.push(k);return stores.delete(k)}};
   const self={registration:{scope,active:active?{}:null},clients:{async claim(){claimed++}},async skipWaiting(){skip++},addEventListener:(name,fn)=>events[name]=fn};
-  const context={self,caches,URL,Request,fetch:async request=>{network.push(key(request));return new Response(key(request).endsWith('index.html')?'APP-SHELL':'asset',{status:failAsset&&key(request).endsWith('icon-512.png')?404:200})}};
+  const context={self,caches,URL,Request,fetch:async request=>{network.push(key(request));return new Response(key(request).endsWith('index.html')?'APP-SHELL':'asset',{status:(failAsset&&key(request).endsWith('icon-512.png')||failPath&&key(request).endsWith(failPath))?404:200})}};
   vm.runInNewContext(fs.readFileSync(path.join(__dirname,'..','service-worker.js'),'utf8'),context);
   async function emit(name,props={}){let task;events[name]({...props,waitUntil:p=>task=p,respondWith:p=>task=p});return task===undefined?undefined:await task}
   return {events,stores,deleted,network,emit,get skip(){return skip},get claimed(){return claimed}};
@@ -158,11 +158,13 @@ async function runWorkerTests(){
    assert.equal(h.api.applyPWAUpdate(),true);handlers.controllerchange();assert.equal(h.context.reloaded,true);
    assert.equal(sent.length,1);
  });
- await asyncTest('First installation preloads study and bundled auth assets then activates',async()=>{const w=workerHarness({active:false});await w.emit('install');assert.equal(w.skip,1);const store=w.stores.values().next().value;assert.equal(store.size,6);assert.ok([...store.keys()].some(k=>k.endsWith('/auth.js')));assert.ok([...store.keys()].some(k=>k.endsWith('/runtime-config.js')))});
+ await asyncTest('First installation preloads study and bundled auth assets then activates',async()=>{const w=workerHarness({active:false});await w.emit('install');assert.equal(w.skip,1);const store=w.stores.values().next().value;assert.equal(store.size,9);assert.ok([...store.keys()].some(k=>k.endsWith('/auth.js')));assert.ok([...store.keys()].some(k=>k.endsWith('/runtime-config.js')))});
  await asyncTest('Update installation waits until explicit message',async()=>{const w=workerHarness();await w.emit('install');assert.equal(w.skip,0);await w.emit('message',{data:{type:'OTHER'}});assert.equal(w.skip,0);await w.emit('message',{data:{type:'APPLY_UPDATE'}});assert.equal(w.skip,1)});
  await asyncTest('Failed shell download keeps previous cache intact',async()=>{const w=workerHarness({failAsset:true});w.stores.set('rik-psykholohii:%2F:shell-old',new Map([['old','saved']]));await assert.rejects(w.emit('install'),/Incomplete/);assert.equal(w.skip,0);assert.equal(w.stores.size,1);assert.equal(w.stores.values().next().value.get('old'),'saved')});
  await asyncTest('Activation deletes only own caches and known legacy names',async()=>{const w=workerHarness();await w.emit('install');for(const k of ['rik-psykholohii:%2F:shell-old','unrelated-app','rik-psykholohii:%2Fother%2F:shell-old','rik-psykholohii-offline-v2'])w.stores.set(k,new Map());await w.emit('activate');assert.ok(w.deleted.includes('rik-psykholohii:%2F:shell-old'));assert.ok(w.deleted.includes('rik-psykholohii-offline-v2'));assert.ok(w.stores.has('unrelated-app'));assert.ok(w.stores.has('rik-psykholohii:%2Fother%2F:shell-old'));assert.equal(w.claimed,1)});
  await asyncTest('Offline navigation serves cached shell without waiting for network',async()=>{const w=workerHarness();await w.emit('install');const before=w.network.length;const res=await w.emit('fetch',{request:{url:'https://local.test/?launch=1',mode:'navigate',method:'GET'}});assert.equal(await res.text(),'APP-SHELL');assert.equal(w.network.length,before)});
+ await asyncTest('Every academic asset is served from cache without another network request',async()=>{const w=workerHarness();await w.emit('install');const before=w.network.length;for(const name of ['curriculum.js','academic-core.js','academic-ui.js']){const r=await w.emit('fetch',{request:{url:'https://local.test/content/'+name,method:'GET'}});assert.equal(await r.text(),'asset')}assert.equal(w.network.length,before)});
+ await asyncTest('Missing curriculum aborts an update and keeps the previous release',async()=>{const w=workerHarness({failPath:'content/curriculum.js'});w.stores.set('rik-psykholohii:%2F:shell-old',new Map([['index.html','old']]));await assert.rejects(w.emit('install'),/Incomplete/);assert.equal(w.stores.size,1);assert.equal(w.skip,0)});
  await asyncTest('Worker ignores YouTube, foreign scope, POST and unrelated assets',async()=>{const w=workerHarness({scope:'https://local.test/tracker/'});for(const request of [{url:'https://youtube.com/embed/a',mode:'no-cors',method:'GET'},{url:'https://local.test/elsewhere/',mode:'navigate',method:'GET'},{url:'https://local.test/tracker/',mode:'navigate',method:'POST'},{url:'https://local.test/tracker/custom.json',method:'GET'}])assert.equal(await w.emit('fetch',{request}),undefined)});
  return {passed:previous.passed+cases.length,stage6Passed:cases.length,cases};
 }

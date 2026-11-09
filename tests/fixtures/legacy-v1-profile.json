@@ -1,0 +1,271 @@
+{
+  "v": 1,
+  "start": "2026-11-08",
+  "seedVersion": 1,
+  "updatedAt": 100,
+  "topics": {
+    "3-2": true
+  },
+  "notes": {
+    "3": "Збережена нотатка"
+  },
+  "courseNotes": "Мій курс",
+  "materials": {
+    "3": [
+      {
+        "id": "m-legacy",
+        "title": "Матеріал для перевірки",
+        "url": "https://example.com/reading",
+        "type": "Стаття"
+      }
+    ]
+  },
+  "topicMaterials": {
+    "3-2": [
+      {
+        "id": "t-legacy",
+        "title": "Джерело до теми",
+        "url": "https://example.com/topic",
+        "type": "Книга"
+      }
+    ]
+  },
+  "resourceStates": {
+    "module-3-m-legacy": {
+      "status": "Вивчаю",
+      "note": "Моя особиста нотатка"
+    },
+    "builtin-media-1-0": {
+      "status": "Опрацьовано",
+      "note": "Вбудований ресурс"
+    }
+  },
+  "cards": [
+    {
+      "id": "c-legacy",
+      "front": "Запитання",
+      "back": "Відповідь",
+      "module": 3,
+      "dueAt": 1700000000000,
+      "box": 4
+    }
+  ],
+  "quiz": {
+    "3": [
+      {
+        "id": "q-legacy",
+        "question": "Питання?",
+        "choices": [
+          "Так",
+          "Ні"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  "days": {
+    "2026-11-07": 45
+  },
+  "done": {
+    "1": true
+  },
+  "_legacyMetadata": {
+    "keep": "Зберегти невідомі поля"
+  },
+  "topicNotes": {
+    "3-2": "Деталі попередньої теми"
+  },
+  "checks": {
+    "1-0": true
+  },
+  "q": {
+    "1": "Питання зі старої програми"
+  },
+  "quizResults": {
+    "3": {
+      "examPassed": true,
+      "history": [
+        {
+          "score": 2
+        }
+      ]
+    }
+  },
+  "caseNotes": {
+    "case1": "Архівний аналіз"
+  },
+  "tasks": {
+    "2": [
+      {
+        "id": "task-old",
+        "title": "Моя вправа",
+        "future": 7
+      }
+    ]
+  },
+  "research": [
+    {
+      "id": "research-old",
+      "title": "Моє дослідження",
+      "future": "Зберегти"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "concept-old",
+      "a": "Увага",
+      "b": "Пам’ять",
+      "relation": "підтримує",
+      "module": 2
+    }
+  ],
+  "events": [
+    {
+      "id": "event-old",
+      "title": "Старе повторення",
+      "date": "2026-11-07"
+    }
+  ],
+  "weeklyNotes": {
+    "2026-11-02": "Висновки тижня"
+  },
+  "weeklyQuestions": {
+    "2026-11-02": "Моє питання"
+  },
+  "topicHistory": {
+    "3-2": 123
+  },
+  "work": {
+    "3": "Мій аналіз"
+  },
+  "consp": {
+    "3": true
+  },
+  "prac": {
+    "3": true
+  },
+  "act": {
+    "2026-11-07": 1
+  },
+  "gl": [
+    {
+      "id": "term-old",
+      "t": "Рефлексія",
+      "d": "Моє визначення"
+    }
+  ],
+  "hidden": {
+    "yt-res-1-0-0": true
+  },
+  "xp": 41,
+  "xpLedger": {
+    "old": 1
+  },
+  "badges": {
+    "old": 1
+  },
+  "cardReviewDays": {
+    "2026-11-07": true
+  },
+  "focusTask": "Читати",
+  "studyResume": {
+    "module": 3,
+    "resourceId": "module-3-m-legacy"
+  },
+  "moduleBookmarks": {
+    "3": "module-3-m-legacy"
+  },
+  "dailyWins": {
+    "2026-11-07": true
+  },
+  "moduleViews": {
+    "3": {
+      "scrollY": 514,
+      "anchor": "notes",
+      "offset": 2,
+      "panels": [
+        "work"
+      ],
+      "resources": []
+    }
+  },
+  "cardTrash": {},
+  "ideas": [
+    {
+      "id": "idea-old",
+      "text": "Моя ідея",
+      "future": true
+    }
+  ],
+  "journal": [
+    {
+      "id": "journal-old",
+      "date": "2026-11-07",
+      "understood": "Контекст"
+    }
+  ],
+  "feynman": [
+    {
+      "id": "feynman-old",
+      "title": "Увага",
+      "explanation": "Моя версія",
+      "history": [
+        {
+          "at": 12,
+          "revised": "Уточнення"
+        }
+      ]
+    }
+  ],
+  "experimentResults": [
+    {
+      "id": "exp-old",
+      "kind": "memory",
+      "rows": [
+        {
+          "length": 3,
+          "correct": 2,
+          "expected": "123",
+          "answer": "124"
+        }
+      ]
+    }
+  ],
+  "toolDrafts": {
+    "ideas:new": {
+      "text": "Незавершена ідея"
+    }
+  },
+  "caseAnalysis": {
+    "case1": {
+      "alternatives": "Інші умови"
+    }
+  },
+  "criticalProgress": {
+    "causality": {
+      "choice": 1,
+      "revealed": true
+    }
+  },
+  "reading": {
+    "enabled": false,
+    "width": 70,
+    "size": 18,
+    "line": 1.7,
+    "future": 5
+  },
+  "explanationLevel": "deep",
+  "learningSession": {
+    "status": "summary",
+    "worked": "Моя робота"
+  },
+  "futureRoot": {
+    "deep": {
+      "keep": [
+        1,
+        2,
+        "текст"
+      ]
+    }
+  }
+}

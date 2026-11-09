@@ -1,3 +1,4 @@
+import './validate-academic.cjs';
 import { readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -21,7 +22,7 @@ const bundled = await build({
   write: false, legalComments: 'inline',
 });
 const bundle = bundled.outputFiles[0].text;
-const files = ['index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
+const files = ['index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'content/curriculum.js', 'content/academic-core.js', 'content/academic-ui.js'];
 const sourceWorker = await readFile(join(root, 'service-worker.js'), 'utf8');
 const hash = createHash('sha256').update(bundle).update(runtime).update(sourceWorker);
 for (const file of files) hash.update(await readFile(join(root, file)));
@@ -31,6 +32,7 @@ const worker = sourceWorker
 
 const out = join(root, 'dist');
 await mkdir(out, { recursive: true });
+await mkdir(join(out, 'content'), { recursive: true });
 await Promise.all(files.map(file => copyFile(join(root, file), join(out, file))));
 await Promise.all([
   writeFile(join(out, 'auth.js'), bundle),
