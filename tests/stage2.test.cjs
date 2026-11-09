@@ -89,7 +89,7 @@ function harness(initial, options = {}) {
   vm.createContext(context);
   for(const file of ['content/curriculum.js','content/academic-core.js','content/academic-ui.js'])new vm.Script(fs.readFileSync(path.join(__dirname,'..',file),'utf8')).runInContext(context);
   const instrumented = source.replace(/\}\)\(\);\s*$/, `
-    globalThis.api={academic:ACADEMIC_UI,norm,toolDraft,toolDraftKey,writeToolDraft,saveTool,learningDelete,ideaToNote,learningCard,
+    globalThis.api={studySequence,studyHref,studyCandidate,studyOverviewHTML,studyContinueHref,studyCurrent,studyStep,studyAction,captureStudyView,restoreStudyView,vStudy,academic:ACADEMIC_UI,norm,toolDraft,toolDraftKey,writeToolDraft,saveTool,learningDelete,ideaToNote,learningCard,
       vLearningRecords,vResearch,vCases,vConcepts,vCritical,vExperiments,vSessions,readingControlsHTML,moduleExplanationHTML,
       searchNorm,searchNear,searchRank,searchHighlight,executeCommand,renderCommandResults,openCommand,
       criticalChoose,criticalReveal,startLearningSession,finishLearningSession,completeLearningSession,

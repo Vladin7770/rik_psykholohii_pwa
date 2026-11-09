@@ -793,6 +793,34 @@ dialog[open]::backdrop{animation:backdrop-in 220ms var(--ease-soft) both;}
 @media(max-width:600px){.learn-session-options{grid-template-columns:1fr}.reading-controls .row{gap:8px}.learn-filters label{min-width:120px}.learning-session{padding:12px}.experiment-word{letter-spacing:.03em}.concept-flow{overflow-wrap:anywhere}}
 @media(prefers-reduced-motion:reduce){.learn-entry,.reading-enabled *{scroll-behavior:auto;transition:none;animation:none}}
 
+
+/* Навчальний простір звичайної програми — чинні кольори та типографіка. */
+body.study-active .shell{display:block;max-width:1000px;padding-bottom:40px}
+body.study-active .side,body.study-active .topbar,body.study-active .mobile-nav{display:none!important}
+body.study-active .main{padding:24px 0 40px}
+.study-page{max-width:70ch;width:100%;margin-inline:auto;overflow-wrap:anywhere}
+.study-page h1{margin-top:10px}.study-back{margin-bottom:24px}.study-back a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.study-steps{list-style:none;display:flex;flex-wrap:wrap;gap:8px 20px;padding:16px 0;margin:20px 0 0;border-block:1px solid var(--line);font-size:.85rem}
+.study-steps a{color:var(--ink-2);text-decoration:none;display:inline-flex;align-items:center;min-height:32px}
+.study-steps a[aria-current=step]{color:var(--accent);font-weight:700}
+.study-content{padding-top:24px}.study-content h2{font-size:1.2rem}.study-description{margin-bottom:24px}
+.study-source{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:20px;margin:24px 0}
+.study-source-url{font-size:.9rem;color:var(--ink-2);margin-bottom:18px;overflow-wrap:anywhere}
+.study-source .btn{margin-top:12px}.study-source .youtube-placeholder{margin-bottom:18px}
+.study-prose{white-space:pre-wrap;line-height:1.8;margin-block:24px}
+.study-notes,.study-tools{margin-top:24px;border-top:1px solid var(--line);padding-top:14px}
+.study-page summary{cursor:pointer;min-height:44px;align-content:center;color:var(--ink-2)}
+.study-notes label{display:block;margin-top:12px}.study-notes textarea{margin-top:10px;min-height:110px}
+.study-tools>.row{margin-top:12px}.study-tools .reading-controls>.row>a{display:none}
+.study-primary{margin-top:28px}.study-result{margin-block:20px;color:var(--accent);font-weight:600}
+.study-pagination>a{display:inline-flex;align-items:center;min-height:44px}.study-pagination{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--line);margin-top:32px;padding-top:24px}
+.study-resource{border-bottom:1px solid var(--line);padding:14px 0}.study-resource:last-child{border:0}
+.study-resource a{display:grid;gap:4px;min-height:48px;text-decoration:none;overflow-wrap:anywhere}.study-resource span{font-size:.85rem;color:var(--ink-2)}
+.study-overview{margin-block:24px}.study-overview>.btn{margin-top:18px}
+.reading-enabled .study-page{max-width:min(100%,var(--reading-width,70ch));font-size:var(--reading-size,18px);line-height:var(--reading-line,1.7)}
+body.study-active *,body.study-active *::before,body.study-active *::after{scroll-behavior:auto;animation:none;transition:none}
+@media(max-width:600px){body.study-active .main{padding-top:12px}.study-back{margin-bottom:18px}.study-page .btn{min-height:44px;padding:10px 14px;white-space:normal;text-align:center}.study-steps{gap:4px 12px;font-size:.78rem}.study-steps a{min-height:44px}.study-source{padding:16px}.study-primary>.btn{width:100%}.study-page h1{font-size:1.6rem}.study-page .learn-filters{display:grid;grid-template-columns:minmax(0,1fr)}}
+
 /* Версіонована академічна програма; використовує чинну палітру й шрифти. */
 .ac-page{overflow-wrap:anywhere}.ac-page h1{font-size:clamp(1.7rem,3vw,2.6rem)}
 .ac-page p+p,.ac-page p+ul,.ac-page p+ol{margin-top:14px}.ac-page h2,.ac-page h3{margin:26px 0 14px}
@@ -1102,6 +1130,8 @@ function validateState(s){
   if(s.theme!==undefined&&['system','light','dark'].indexOf(s.theme)===-1)throw new Error('theme');
   if(s.dailyGoal){var unit=s.dailyGoal.unit===undefined?'minutes':s.dailyGoal.unit,target=s.dailyGoal.target;if(['minutes','steps'].indexOf(unit)===-1||(target!==undefined&&(!Number.isInteger(target)||target<1||target>(unit==='minutes'?180:100))))throw new Error('dailyGoal')}
   if(s.studyResume&&((s.studyResume.module!==undefined&&(!Number.isInteger(s.studyResume.module)||s.studyResume.module<0||s.studyResume.module>12))||(s.studyResume.resourceId!==undefined&&typeof s.studyResume.resourceId!=='string')))throw new Error('studyResume');
+  if(s.studyResume){var sr=s.studyResume;if(sr.step!==undefined&&['read','reflect','finish'].indexOf(sr.step)<0)throw new Error('studyStep');if(sr.scrollY!==undefined&&(!Number.isFinite(sr.scrollY)||sr.scrollY<0))throw new Error('studyScroll')}
+  Object.keys(s.resourceStates||{}).forEach(function(id){var st=s.resourceStates[id];if(st.openedAt!==undefined&&(!Number.isFinite(st.openedAt)||st.openedAt<0))throw new Error('openedAt')});
   Object.keys(s.moduleBookmarks||{}).forEach(function(k){if(!/^(?:[1-9]|1[0-2])$/.test(k)||typeof s.moduleBookmarks[k]!=='string')throw new Error('moduleBookmarks')});
   if(s.libraryVersion!==undefined&&s.libraryVersion!==0&&s.libraryVersion!==1)throw new Error('libraryVersion');
   Object.keys(s.library||{}).forEach(function(id){var r=s.library[id];if(['__proto__','constructor','prototype'].indexOf(id)>-1||!isRecord(r)||r.id!==id||!id||typeof r.title!=='string'||typeof r.url!=='string'||typeof r.type!=='string'||['Відео','Стаття','Книга','Лекція','Інше'].indexOf(r.type)===-1||typeof r.desc!=='string'||!Array.isArray(r.tags)||r.tags.some(function(t){return typeof t!=='string'})||!validPlacement(r.module,r.topicKey||''))throw new Error('library');if(r.url){try{if(!/^https?:$/.test(new URL(r.url).protocol))throw new Error()}catch(e){throw new Error('library-url')}}});
@@ -1143,6 +1173,7 @@ function mutate(fn,doRender,isLearning,passive){
   var gained=[],hour=(new Date()).getHours();if((hour>=22||hour<5)&&(+S.xp||0)>prevXP){S.nightOwl=true}
   if(!passive)evaluateBadges(S,gained);saveLocal();
   if(doRender!==false)render();
+  if(route()==='study')return;
   var newLevel=levelInfo(+S.xp||0).level,messages=[];if(doneCountFor(S)>prevDone)messages.push('Модуль завершено');if(gained.length)messages.push('Нове досягнення: '+gained.join(', '));if(newLevel>prevLevel)messages.push('Новий рівень: '+levelInfo(+S.xp||0).name);if(messages.length){toast(messages.join(' · ')+' 🎉');celebrate()}else if(goalWon)toast('Денну ціль виконано. На сьогодні достатньо 🌿');
 }
 function setKey(o,k,v){if(v)o[k]=true;else delete o[k]}
@@ -1265,7 +1296,7 @@ function vAnalytics(){
 /* ───────── Маршрути ───────── */
 function route(){
   var r=(location.hash||'#academic').slice(1).split('?')[0];
-  if(['academic','overview','modules','week','glossary','guide','library','cards','cases','research','concepts','calendar','backup','review','achievements','analytics','focus','ideas','journal','feynman','sessions','experiments','critical'].indexOf(r)>-1)return r;
+  if(['study','academic','overview','modules','week','glossary','guide','library','cards','cases','research','concepts','calendar','backup','review','achievements','analytics','focus','ideas','journal','feynman','sessions','experiments','critical'].indexOf(r)>-1)return r;
   var m=/^m(\d{1,2})$/.exec(r);
   if(m&&+m[1]>=1&&+m[1]<=12)return r;
   return 'overview';
@@ -1306,10 +1337,89 @@ function renderNav(){
   $('#side').innerHTML=h;updatePill();if(window.RikAuth)window.RikAuth.render();
 }
 function moduleSwitcherHTML(current){return '<nav class="module-switcher" aria-label="Швидке перемикання модулів">'+MODS.map(function(m,i){var n=i+1;return '<a href="#m'+n+'" aria-label="Модуль '+n+': '+esc(m.title)+'"'+(n===current?' aria-current="page"':'')+'>'+pad(n)+'</a>'}).join('')+'</nav>'}
-function vModules(){var completed=doneCount(),next=nextModule();var h='<div class="page"><p class="eyebrow">Навчання у власному темпі</p><h1>Модулі</h1><p class="lead">Обери тему, до якої хочеш повернутися. Завершено '+completed+' з 12 модулів.</p><div class="row" style="margin-top:18px"><a class="btn" href="#review">Повторення · '+dueCards().length+'</a><a class="btn" href="#cards">Додати картку</a></div><nav class="module-list" aria-label="12 модулів програми">';
+function vModules(){var completed=doneCount(),next=nextModule();var h='<div class="page"><p class="eyebrow">Навчання у власному темпі</p><h1>Модулі</h1><p class="lead">Обери тему, до якої хочеш повернутися. Завершено '+completed+' з 12 модулів.</p>'+studyOverviewHTML()+'<nav class="module-list" aria-label="12 модулів програми">';
   MODS.forEach(function(m,i){var n=i+1,st=modStats(n);h+='<a class="module-link" href="#m'+n+'"><span class="module-symbol" aria-hidden="true">'+MOD_VISUAL[i].icon+'</span><span><strong>'+pad(n)+'. '+esc(m.title)+'</strong><small>'+(S.done[n]?'Завершено':n===next?'Наступний крок · '+st.pct+'%':st.pct+'% опрацьовано')+'</small><span class="bar" aria-hidden="true"><i style="width:'+st.pct+'%"></i></span></span><span class="module-arrow" aria-hidden="true">→</span></a>'});
   return h+'</nav></div>';
 }
+
+/* ───────── Звичайна програма: один матеріал за раз ───────── */
+var STUDY_VIEW=null,STUDY_SAVE_TIMER=null;
+var STUDY_STEPS=['read','reflect','finish'];
+function studySequence(inbox){
+  // Preserve the module page order: module sources, then sources of each topic.
+  return allResources().map(function(r,i){return {r:r,i:i}}).filter(function(x){return inbox?!x.r.module:!!x.r.module}).sort(function(a,b){
+    var topic=function(r){return r.topicKey?+r.topicKey.split('-')[1]+1:0};
+    return a.r.module-b.r.module||topic(a.r)-topic(b.r)||a.i-b.i;
+  }).map(function(x){return x.r});
+}
+function studyHref(r,step){return '#study?material='+encodeURIComponent(r.id)+(step?'&step='+step:'')}
+function studyCandidate(n){
+  var target=n===undefined?resumeTarget():{module:n},list=studySequence(false).filter(function(r){return n===undefined||r.module===n}),saved=list.find(function(r){return r.id===(n===undefined?target.resource&&target.resource.id:S.moduleBookmarks[n])});
+  if(saved)return saved;
+  if(n===undefined){var current=list.filter(function(r){return r.module===(target.module||nextModule()||1)});if(current.length)list=current}
+  return list.find(function(r){return getResourceState(r.id).status!=='Опрацьовано'})||list[0]||null;
+}
+function studyContinueHref(target){var r=target.resource||studyCandidate(target.module||undefined);return r?studyHref(r)+'&resume=1':target.module?'#m'+target.module:'#modules'}
+function studyOverviewHTML(n){
+  var r=studyCandidate(n),saved=r&&S.studyResume.resourceId===r.id,review=studySequence(false).filter(function(x){return (n===undefined||x.module===n)&&getResourceState(x.id).status==='Повернутися'});
+  var h='<section class="today-hero study-overview" aria-label="Продовження звичайної програми"><p class="eyebrow">'+(saved?'Продовжити з місця зупинки':'Наступний навчальний крок')+'</p>';
+  if(r)h+='<h2>'+esc(r.title)+'</h2><p class="hint">Модуль '+r.module+' · '+esc(MODS[r.module-1].title)+(saved?' · '+({read:'Ознайомлення',reflect:'Осмислення',finish:'Завершення'}[S.studyResume.step]||'Ознайомлення'):'')+'</p><a class="btn primary" href="'+esc(studyHref(r)+'&resume=1')+'">Продовжити навчання →</a>';
+  else h+='<p>У цьому модулі поки немає доступних матеріалів.</p>';
+  h+='</section>';
+  if(review.length)h+='<details class="module-section"><summary>Потрібно повторити <small>'+review.length+'</small></summary>'+review.map(studyResourceCard).join('')+'</details>';
+  return h;
+}
+function studyResourceCard(r){var st=getResourceState(r.id);return '<article class="study-resource" data-resource="'+esc(r.id)+'" data-reading-anchor="resource:'+esc(r.id)+'"><a href="'+esc(studyHref(r))+'"><strong>'+esc(r.title)+'</strong><span>'+esc(r.type)+' · '+esc(st.status==='Опрацьовано'?'Опрацьовано':st.status==='Повернутися'?'Потрібно повторити':st.status==='Вивчаю'?'Вивчаю':st.openedAt?'Відкрито':'Ще не опрацьовано')+'</span></a></article>'}
+function captureStudyView(){
+  clearTimeout(STUDY_SAVE_TIMER);
+  if(!STUDY_VIEW||S.studyResume.resourceId!==STUDY_VIEW.id||S.studyResume.step!==STUDY_VIEW.step)return false;
+  var y=Math.max(0,+window.scrollY||0);if(S.studyResume.scrollY===y)return true;
+  S.studyResume.scrollY=y;S.updatedAt=Date.now();return saveLocal();
+}
+function restoreStudyView(){if(!STUDY_VIEW||route()!=='study')return false;var y=Math.max(0,+S.studyResume.scrollY||0);try{window.scrollTo({top:y,left:0,behavior:'instant'})}catch(e){window.scrollTo(0,y)}return true}
+function studyCurrent(){var id=learnQuery('material');return allResources().find(function(r){return r.id===id})||null}
+function studyStep(){var requested=learnQuery('step'),saved=S.studyResume;return STUDY_STEPS.indexOf(requested)>-1?requested:STUDY_STEPS.indexOf(saved.step)>-1?saved.step:'read'}
+function studySourceHTML(r){
+  var text=typeof r.text==='string'?r.text:typeof r.content==='string'?r.content:'',h=text?'<div class="study-prose">'+esc(text)+'</div>':'';
+  if(!r.url)return h+(text?'':'<p class="hint">Цей матеріал містить лише опис, наведений вище. Зовнішнє посилання не додано.</p>');
+  var u;try{u=new URL(r.url);if(!/^https?:$/.test(u.protocol))return h+'<p class="hint">Посилання недоступне.</p>'}catch(e){return h+'<p class="hint">Посилання недоступне.</p>'}
+  var search=/(^|\.)youtube\.com$/.test(u.hostname)&&u.pathname==='/results',pdf=/\.pdf$/i.test(u.pathname),label=search?'Пошук на YouTube':pdf?'PDF · зовнішнє джерело':r.type+' · зовнішнє джерело';
+  return h+'<section class="study-source" aria-label="Навчальне джерело"><p class="eyebrow">'+esc(label)+'</p><p class="study-source-url">'+esc(r.url)+'</p>'+(search?'<p class="hint">Це пошуковий ресурс. Конкретну лекцію потрібно обрати й перевірити самостійно.</p>':'')+youtubePlaceholder(r)+'<a class="btn" href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer" data-a="resource-open" data-k="'+esc(r.id)+'">'+(search?'Відкрити пошук':'Відкрити джерело')+' ↗</a><p class="hint">Відкриється в новій вкладці. Повернися сюди, щоб продовжити. Відкриття джерела не завершує матеріал.</p></section>';
+}
+function studyNotesHTML(r,reflect){var note=getResourceState(r.id).note||'';return '<details class="study-notes"'+(reflect?' open':'')+'><summary>'+(reflect?'Що найважливішого ти зрозумів?':'Записати думку'+(note?' · є нотатка':''))+'</summary><label class="fl" for="study-note">'+(reflect?'Головна думка своїми словами — необов’язково':'Моя думка')+'<textarea class="ta" id="study-note" data-bind="resourceNotes" data-k="'+esc(r.id)+'" placeholder="Можна залишити порожнім">'+esc(note)+'</textarea></label><p class="hint">Зберігається автоматично в нотатці цього матеріалу.</p></details>'}
+function studyToolsHTML(r,step){return '<details class="study-tools"><summary>Додаткові інструменти</summary><div class="row">'+(step!=='read'?'<a class="btn" href="#feynman?resource='+encodeURIComponent(r.id)+'">Пояснити своїми словами · Фейнман</a><button class="btn" type="button" data-a="card-new" data-k="'+esc(r.id)+'">Створити картку</button>':'')+(step==='finish'?'<a class="btn" href="#review?module='+r.module+'">Повторити картки</a>':'')+(r.module?'<a class="btn" href="#m'+r.module+'?notes=1">Конспект модуля</a>':'')+'<button class="btn" type="button" data-a="cmd-open">Пошук</button><a class="btn" href="#sessions">Навчальні сесії</a><a class="btn" href="#week">Таймер</a></div>'+learningSessionHTML()+readingControlsHTML()+'</details>'}
+function vStudy(){
+  var r=studyCurrent();
+  if(!r){STUDY_VIEW=null;return '<div class="page study-page"><h1>Матеріал недоступний</h1><p class="lead">Його могли перемістити або прибрати з програми. Твої нотатки та прогрес збережено.</p><p class="sec"><a class="btn" href="#modules">До модулів</a> <a class="btn" href="#library">До бібліотеки</a></p></div>'}
+  rememberResource(r.id,false);var step=studyStep(),same=S.studyResume.step===step;
+  S.studyResume=Object.assign({},S.studyResume,{module:r.module,resourceId:r.id,step:step,scrollY:same?S.studyResume.scrollY||0:0});
+  var st=getResourceState(r.id);if(!st.openedAt){st=Object.assign({},st,{openedAt:Date.now()});S.resourceStates[r.id]=st}saveLocal();
+  STUDY_VIEW={id:r.id,step:step};
+  var list=studySequence(!r.module),i=list.findIndex(function(x){return x.id===r.id}),moduleList=list.filter(function(x){return x.module===r.module}),index=moduleList.findIndex(function(x){return x.id===r.id}),prev=list[i-1],next=list[i+1],back=r.module?'#m'+r.module:'#library',label={read:'Ознайомлення',reflect:'Осмислення',finish:'Завершення'};
+  var h='<article class="page study-page" data-resource="'+esc(r.id)+'"><nav class="study-back" aria-label="Повернення"><a href="'+back+'">← '+(r.module?'До модуля':'До бібліотеки')+'</a></nav><header><p class="eyebrow">'+(r.module?'Модуль '+r.module:'Бібліотека')+' / Матеріал '+(index+1)+' з '+moduleList.length+'</p>'+(r.module?'<p class="hint">'+esc(MODS[r.module-1].title)+'</p>':'')+'<h1>'+esc(r.title)+'</h1><ol class="study-steps" aria-label="Кроки навчання">'+STUDY_STEPS.map(function(x,j){return '<li><a href="'+esc(studyHref(r,x))+'"'+(x===step?' aria-current="step"':'')+'><span aria-hidden="true">'+(j+1)+'. </span>'+label[x]+'</a></li>'}).join('')+'</ol></header><section class="study-content" aria-label="'+label[step]+'">';
+  if(step==='read'){
+    h+='<p class="hint">'+esc(r.type)+'</p>'+(r.desc?'<p class="lead study-description">'+esc(r.desc)+'</p>':'')+studySourceHTML(r)+studyNotesHTML(r,false)+'<div class="study-primary"><button class="btn primary" type="button" data-a="study-advance" data-step="'+(st.status==='Заплановано'?'start':'reflect')+'">'+(st.status==='Заплановано'?'Почати':'Продовжити до осмислення')+'</button></div>';
+  }else if(step==='reflect'){
+    h+='<h2>Осмислення</h2><p class="hint">Коротке пояснення допоможе впорядкувати думки. Цей крок можна пропустити.</p>'+studyNotesHTML(r,true)+'<div class="study-primary"><a class="btn primary" href="'+esc(studyHref(r,'finish'))+'">Далі до завершення</a></div>';
+  }else{
+    var decided=st.status==='Опрацьовано'||st.status==='Повернутися';
+    h+='<h2>Завершення</h2><p class="hint">Підтвердь опрацювання самостійно. Ця позначка не є перевіркою засвоєння знань.</p><p class="study-result" role="status">'+(st.status==='Опрацьовано'?'Опрацьовано ✓':st.status==='Повернутися'?'Потрібно повторити':'Матеріал ще не позначено опрацьованим.')+'</p><div class="row"><button class="btn'+(!decided?' primary':'')+'" type="button" data-a="study-complete" aria-pressed="'+(st.status==='Опрацьовано')+'">Опрацьовано</button><button class="btn" type="button" data-a="study-repeat" aria-pressed="'+(st.status==='Повернутися')+'">Потрібно повторити</button></div>'+studyNotesHTML(r,false)+'<div class="study-primary">'+(next?'<a class="btn'+(decided?' primary':'')+'" href="'+esc(studyHref(next))+'">Наступний матеріал →</a><p class="hint">'+(next.module!==r.module?'Модуль '+next.module+' · ':'')+esc(next.title)+'</p>':'<p>Це останній доступний матеріал. Можна повернутися до програми або повторення.</p><a class="btn primary" href="#modules">До програми</a>')+'</div>';
+  }
+  h+='</section>'+studyToolsHTML(r,step)+'<nav class="study-pagination" aria-label="Навігація між матеріалами">'+(prev?'<a class="btn" href="'+esc(studyHref(prev))+'">← Попередній матеріал</a>':'<span class="hint">Перший матеріал</span>')+(step!=='finish'&&next?'<a href="'+esc(studyHref(next))+'">Наступний →</a>':'')+'</nav></article>';
+  return h;
+}
+function studyAction(action,step){
+  var r=studyCurrent();if(route()!=='study'||!r)return false;
+  if(action==='study-advance'){
+    if(step==='start'){mutate(function(s){if(getResourceState(r.id).status==='Заплановано')setResourceStatus(s,r.id,'Вивчаю')},false,false,true);render();var primary=document.querySelector('.study-primary button');if(primary)primary.focus();return true}
+    if(step==='reflect'){location.hash=studyHref(r,'reflect');return true}return false;
+  }
+  if(action==='study-complete'||action==='study-repeat'){
+    if(studyStep()!=='finish')return false;
+    captureStudyView();mutate(function(s){var status=action==='study-complete'?'Опрацьовано':'Повернутися';if(getResourceState(r.id).status!==status)setResourceStatus(s,r.id,status);s.resourceStates[r.id].recallPending=false},false,true,true);render();var result=document.querySelector('.study-result');if(result){result.tabIndex=-1;result.focus({preventScroll:true})}return true;
+  }return false;
+}
+window.addEventListener('scroll',function(){if(STUDY_VIEW){clearTimeout(STUDY_SAVE_TIMER);STUDY_SAVE_TIMER=setTimeout(captureStudyView,350)}},{passive:true});
 
 /* ───────── Годинник року ───────── */
 function polar(cx,cy,r,deg){var a=deg*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)]}
@@ -1405,13 +1515,13 @@ function resumeTarget(){
   var active=list.filter(function(r){return getResourceState(r.id).status==='Вивчаю'}).sort(function(a,b){return (+getResourceState(b.id).updatedAt||0)-(+getResourceState(a.id).updatedAt||0)});
   if(active.length)return {module:active[0].module,resource:active[0]};return {module:nextModule()||12,resource:null};
 }
-function resumeHref(target){return (target.module?'#m'+target.module:'#library')+(target.resource?'?material='+encodeURIComponent(target.resource.id):'')}
-function rememberResource(id,persist){var r=allResources().find(function(x){return x.id===id});if(!r)return false;var changed=S.studyResume.module!==r.module||S.studyResume.resourceId!==id||(r.module&&S.moduleBookmarks[r.module]!==id);S.studyResume=Object.assign({},S.studyResume,{module:r.module,resourceId:id});if(r.module)S.moduleBookmarks[r.module]=id;if(changed){S.updatedAt=Date.now();if(persist!==false)saveLocal()}return true}
-function rememberModule(n){if(!Number.isInteger(n)||n<1||n>12)return;var id=S.moduleBookmarks[n]||(S.studyResume.module===n?S.studyResume.resourceId:''),r=allResources().find(function(x){return x.id===id&&x.module===n});if(r){rememberResource(id);return}if(S.studyResume.module===n&&!S.studyResume.resourceId)return;S.studyResume=Object.assign({},S.studyResume,{module:n,resourceId:''});S.updatedAt=Date.now();saveLocal()}
+function resumeHref(target){return target.resource?studyHref(target.resource):target.module?'#m'+target.module:'#library'}
+function rememberResource(id,persist){var r=allResources().find(function(x){return x.id===id});if(!r)return false;var changed=S.studyResume.module!==r.module||S.studyResume.resourceId!==id||(r.module&&S.moduleBookmarks[r.module]!==id);S.studyResume=Object.assign({},S.studyResume,{module:r.module,resourceId:id},S.studyResume.resourceId===id||S.studyResume.step===undefined?{}:{step:'read',scrollY:0});if(r.module)S.moduleBookmarks[r.module]=id;if(changed){S.updatedAt=Date.now();if(persist!==false)saveLocal()}return true}
+function rememberModule(n){if(!Number.isInteger(n)||n<1||n>12)return;var id=S.moduleBookmarks[n]||(S.studyResume.module===n?S.studyResume.resourceId:''),r=allResources().find(function(x){return x.id===id&&x.module===n});if(r){rememberResource(id);return}if(S.studyResume.module===n&&!S.studyResume.resourceId)return;S.studyResume=Object.assign({},S.studyResume,{module:n,resourceId:''},S.studyResume.step===undefined?{}:{step:'read',scrollY:0});S.updatedAt=Date.now();saveLocal()}
 function remapBookmark(oldId,newId,n){if(!oldId||oldId===newId)return;Object.keys(S.moduleBookmarks).forEach(function(k){if(S.moduleBookmarks[k]===oldId){delete S.moduleBookmarks[k];S.moduleBookmarks[n]=newId}});if(S.studyResume.resourceId===oldId)S.studyResume=Object.assign({},S.studyResume,{module:n,resourceId:newId})}
 function routeMaterial(n){var query=(location.hash||'').split('?')[1];if(!query)return '';var id=new URL('https://local.invalid/?'+query).searchParams.get('material');return allResources().some(function(r){return (n===undefined||r.module===n)&&r.id===id})?id:''}
 function restoreMaterial(id){var card=Array.prototype.find.call(document.querySelectorAll('[data-resource]'),function(el){return el.dataset.resource===id});if(!card)return false;for(var parent=card.parentElement;parent;parent=parent.parentElement){if(parent.tagName==='DETAILS')parent.open=true;if(parent.classList&&parent.classList.contains('reveal'))parent.classList.add('is-visible')}card.classList.add('is-visible');var more=card.querySelector('details.rc-more');if(more)more.open=true;card.tabIndex=-1;card.focus({preventScroll:true});try{card.scrollIntoView({block:'start',behavior:'instant'})}catch(e){card.scrollIntoView({block:'start'})}return true}
-function renderPageNavigation(){if(ACADEMIC_UI)ACADEMIC_UI.capture();captureReadingView(READING_MODULE);if(route()!=='experiments')pauseExperiment();clearTimeout(READING_SAVE_TIMER);RESTORING_READING=true;setMenu(false);var r=route(),m=/^m(\d+)$/.exec(r),id='',explicit='';if(m){var n=+m[1];explicit=routeMaterial(n);if(explicit)rememberResource(explicit);else rememberModule(n);id=S.studyResume.resourceId}else if(r==='library'){id=routeMaterial();if(id){Object.assign(LIB_VIEW,{scope:'all',q:'',type:'',status:'',module:'',tag:'',core:'',focusId:id,limit:30});rememberResource(id)}}render();var restored=explicit?(learnQuery('resume')&&m&&restoreReadingView(+m[1])||restoreMaterial(explicit)):m&&restoreReadingView(+m[1]);restored=focusLearningContext()||restored;if(!restored&&id)restored=restoreMaterial(id);if(!restored){window.scrollTo(0,0);var heading=document.querySelector('#main h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true})}}var done=function(){RESTORING_READING=false};if(window.requestAnimationFrame)window.requestAnimationFrame(done);else done();if(ACADEMIC_UI)ACADEMIC_UI.restore()}
+function renderPageNavigation(){captureStudyView();if(ACADEMIC_UI)ACADEMIC_UI.capture();captureReadingView(READING_MODULE);if(route()!=='experiments')pauseExperiment();clearTimeout(READING_SAVE_TIMER);RESTORING_READING=true;setMenu(false);var r=route(),m=/^m(\d+)$/.exec(r),id='',explicit='';if(m){var n=+m[1];explicit=routeMaterial(n);if(explicit)rememberResource(explicit);else rememberModule(n);id=S.studyResume.resourceId}else if(r==='library'){id=routeMaterial();if(id){Object.assign(LIB_VIEW,{scope:'all',q:'',type:'',status:'',module:'',tag:'',core:'',focusId:id,limit:30});rememberResource(id)}}render();var restored=r==='study'?restoreStudyView():explicit?(learnQuery('resume')&&m&&restoreReadingView(+m[1])||restoreMaterial(explicit)):m&&restoreReadingView(+m[1]);restored=focusLearningContext()||restored;if(!restored&&id)restored=restoreMaterial(id);if(r==='study'){var studyHeading=document.querySelector('#main h1');if(studyHeading){studyHeading.tabIndex=-1;studyHeading.focus({preventScroll:true})}}if(!restored){window.scrollTo(0,0);var heading=document.querySelector('#main h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true})}}var done=function(){RESTORING_READING=false};if(window.requestAnimationFrame)window.requestAnimationFrame(done);else done();if(ACADEMIC_UI)ACADEMIC_UI.restore()}
 function todayWeeklyHTML(){var dates=weekDates(),end=new Date(dates[0].getFullYear(),dates[0].getMonth(),dates[0].getDate()+7),summary=periodSummary(dates[0],end);var h='<section class="sec today-week" aria-labelledby="today-week-title"><div class="today-section-head"><h2 id="today-week-title">Цього тижня</h2><a href="#week">Огляд тижня →</a></div><div class="today-week-stats"><span><b>'+fmtMin(summary.minutes)+'</b> навчання</span><span><b>'+summary.steps+'</b> '+plural(summary.steps,'крок','кроки','кроків')+'</span></div>';
   if(summary.items.length)h+='<ul class="today-learned">'+summary.items.slice(0,3).map(function(x){return '<li><a href="'+esc(resumeHref({module:x.module,resource:x.resourceId?{id:x.resourceId}:null}))+'">'+esc(x.title)+'<small>'+esc(x.kind==='topic'?'Опрацьована тема':'Завершений матеріал')+' · '+(x.module?'модуль '+x.module:'бібліотека')+'</small></a></li>'}).join('')+'</ul>';
   else h+='<p class="hint">'+(summary.reviews?'Повторено '+summary.reviews+' '+plural(summary.reviews,'картку','картки','карток')+'.':summary.minutes?'Навчальний час уже зараховано. Тут з’являться опрацьовані теми й матеріали.':'Тут з’явиться те, що ти вивчиш цього тижня. Маленьких кроків достатньо.')+'</p>';
@@ -1423,7 +1533,7 @@ function todayTimerHTML(){if(!timerActive()){if(focusActive())return '<section c
 function vOverview(){
   var target=resumeTarget(),rhythm=studyRhythm(),due=dueCards().length;
   var h='<div class="page today-page"><header class="dhead"><div><p class="eyebrow">'+esc(fmtLong(new Date()))+'</p><h1>Сьогодні</h1></div></header>';
-  h+='<section class="today-hero" aria-labelledby="continue-title"><p class="eyebrow">Твій наступний крок</p><h2 id="continue-title">'+esc(target.module?MODS[target.module-1].title:'Матеріал із бібліотеки')+'</h2><p class="today-material">'+(target.resource?esc(target.resource.title):'Модуль '+target.module+' · можна рухатися у власному темпі')+'</p><a class="btn primary continue-btn" href="'+esc(resumeHref(target)+(target.resource?'&resume=1':''))+'">Продовжити навчання <span aria-hidden="true">→</span></a>';
+  h+='<section class="today-hero" aria-labelledby="continue-title"><p class="eyebrow">Твій наступний крок</p><h2 id="continue-title">'+esc(target.module?MODS[target.module-1].title:'Матеріал із бібліотеки')+'</h2><p class="today-material">'+(target.resource?esc(target.resource.title):'Модуль '+target.module+' · можна рухатися у власному темпі')+'</p><a class="btn primary continue-btn" href="'+esc(studyContinueHref(target))+'">Продовжити навчання <span aria-hidden="true">→</span></a>';
   if(!timerActive()&&!focusActive())h+='<button class="btn ten-minute-btn" type="button" data-a="quick-ten">Лише 10 хвилин</button><p class="hint">Для дня, коли сил небагато. Один дотик запускає таймер.</p>';
   h+='<div class="row sec"><a class="btn" href="#review">Повторити</a><a class="btn" href="#ideas">Занотувати ідею</a><a class="btn" href="#sessions">Обрати сесію</a></div>';
   h+=todayTimerHTML()+'</section><div class="today-pair">'+dailyGoalHTML()+'<section class="dc rhythm-card" aria-labelledby="rhythm-title"><h2 id="rhythm-title">Твій ритм</h2><p class="rhythm-number">'+rhythm.series+' <span>'+plural(rhythm.series,'навчальний день','навчальні дні','навчальних днів')+'</span></p><p class="hint">'+esc(rhythm.message)+'</p><p class="hint">Усього: '+rhythm.total+' '+plural(rhythm.total,'день навчання','дні навчання','днів навчання')+'.</p></section></div>';
@@ -1475,7 +1585,8 @@ function queueReadingSave(){if(RESTORING_READING||!READING_MODULE)return;clearTi
 function vModule(n){
   var m=MODS[n-1],st=modStats(n),prev=MODS[n-2],next=MODS[n];
   var mv=MOD_VISUAL[n-1];var h='<div class="page module-page" data-module-view="'+n+'"><p class="eyebrow"><span class="mod-mark" style="--mcolor:'+mv.color+';--msoft:'+mv.soft+'">'+mv.icon+'</span> Місяць '+n+' з 12</p><h1>'+esc(m.title)+'</h1><p class="lead">'+esc(m.goal)+'</p>';
-  h+=readingControlsHTML()+moduleSwitcherHTML(n)+moduleExplanationHTML(n);
+  h+='<p class="hint"><a href="#modules">← Усі модулі</a></p>'+studyOverviewHTML(n);
+  h+=modulePanelStart(n,'orientation','Орієнтир до тем модуля','Огляд і параметри читання')+readingControlsHTML()+moduleExplanationHTML(n)+'</details>';
   h+='<p class="hint module-progress">'+st.pct+'% модуля · '+st.td+' з '+m.topics.length+' тем</p>';
   h+=modulePanelStart(n,'about','Про модуль','Мета й орієнтири');
   h+='<p class="meta"><span>Орієнтир за графіком: до '+esc(fmtLong(deadline(n)))+'</span><span>Obsidian: '+esc(m.obs)+'</span></p>';
@@ -1484,10 +1595,9 @@ function vModule(n){
   if(n>=5&&n<=9)h+='<div class="note">Це навчальна теорія, а не практика. Не застосовуй її до реальних людей як лікування чи діагностику. Див. <a href="#guide">межі</a>.</div>';
 
   h+='</details>';
-  var bookmarked=allResources().find(function(r){return r.module===n&&r.id===S.moduleBookmarks[n]});
-  h+='<div class="module-shortcuts"><a class="btn" href="#review?module='+n+'">Повторити · '+dueCards(n).length+'</a><button class="btn" type="button" data-a="card-new" data-m="'+n+'">＋ Картка</button>'+(bookmarked?'<a class="btn primary" href="'+esc(resumeHref({module:n,resource:bookmarked}))+'">Продовжити матеріал</a>':'')+'</div>';
+  h+='<details class="module-section"><summary>Інструменти модуля</summary><div class="row"><a class="btn" href="#review?module='+n+'">Повторити картки · '+dueCards(n).length+'</a><button class="btn" type="button" data-a="card-new" data-m="'+n+'">＋ Картка</button></div></details>';
   var attached=allResources().filter(function(r){return r.module===n&&!r.topicKey});
-  h+='<section class="sec"><h2>Матеріали модуля <small>'+attached.length+'</small></h2><div class="row" style="margin-bottom:12px"><button class="btn" type="button" data-a="material-picker" data-m="'+n+'">Прикріпити з бібліотеки</button><a class="btn" href="#library">До бібліотеки</a></div>'+resourceListHTML(attached)+'</section>';
+  h+='<section class="sec"><h2>Матеріали модуля <small>'+attached.length+'</small></h2><details class="module-section"><summary>Керування матеріалами</summary><div class="row"><button class="btn" type="button" data-a="material-picker" data-m="'+n+'">Прикріпити з бібліотеки</button><a class="btn" href="#library">До бібліотеки</a></div></details>'+resourceListHTML(attached)+'</section>';
 
   h+=modulePanelStart(n,'topics','Теми модуля',st.td+' з '+m.topics.length);
   h+='<section class="sec"><h2>Теми <small>'+st.td+' з '+m.topics.length+'</small></h2><div class="card">';
@@ -1713,10 +1823,12 @@ function youtubePlaceholder(r){var info=youtubeInfo(r.url);if(!info)return '';re
 function loadYouTube(id){var r=allResources().find(function(x){return x.id===id}),info=r&&youtubeInfo(r.url);if(!info)return false;if(navigator.onLine===false){toast('Ти офлайн. Нотатки доступні; відео можна відкрити з інтернетом.');return false}var card=Array.prototype.find.call(document.querySelectorAll('[data-resource]'),function(x){return x.dataset.resource===id}),box=card&&card.querySelector('[data-youtube-box]');if(!box)return false;if(box.dataset.loaded==='1')return true;box.innerHTML='<div class="youtube-player"><img class="youtube-thumbnail" src="'+info.thumbnail+'" alt="Мініатюра: '+esc(r.title)+'"><iframe class="resource-video" src="'+info.embed+'?autoplay=1" title="'+esc(r.title)+'" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';box.dataset.loaded='1';rememberResource(id);return true}
 function moduleSelectOptions(n){return '<option value="0"'+(!n?' selected':'')+'>Без модуля · Вхідні</option>'+MODS.map(function(m,i){var index=i+1;return '<option value="'+index+'"'+(n===index?' selected':'')+'>'+index+'. '+esc(m.title)+'</option>'}).join('')}
 function resourceCard(r){
+  if(/^m\d+$/.test(route()))return studyResourceCard(r);
   var st=getResourceState(r.id),trash=!!S.hidden[r.id],suggested=S.studyResume.module||nextModule()||1,selected=LIB_SELECTED.has(r.id),core=coreOf(r);
   var h='<article class="rc library-resource" data-resource="'+esc(r.id)+'" data-reading-anchor="resource:'+esc(r.id)+'"><div class="rc-top">';
   if(route()==='library'&&LIB_SELECT_MODE)h+='<label class="lib-select-control"><input type="checkbox" class="lib-sel" data-a="lib-select" data-k="'+esc(r.id)+'" aria-label="Обрати: '+esc(r.title)+'"'+(selected?' checked':'')+'></label>';
   h+='<div class="rc-main"><div class="rc-title">'+(r.url?'<a href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer" data-a="resource-open" data-k="'+esc(r.id)+'">'+esc(r.title)+' <span aria-hidden="true">↗</span></a>':esc(r.title))+'</div><div class="rc-meta"><span>'+esc(r.type)+'</span>'+(r.language?'<span>'+esc(r.language)+'</span>':'')+(core?'<span>Основне</span>':'')+'</div></div>'+(!trash?materialStatusHTML(r):'<button class="btn" type="button" data-a="res-restore" data-k="'+esc(r.id)+'">Повернути</button>')+'</div>';
+  if(!trash)h+='<p class="hint"><a class="btn small" href="'+esc(studyHref(r))+'">Вивчати матеріал →</a></p>';
   if(r.tags.length)h+='<div class="material-tags">'+r.tags.map(function(tag){return '<button class="material-tag" type="button" data-a="lib-tag" data-v="'+esc(tag)+'">#'+esc(tag)+'</button>'}).join('')+'</div>';
   if(!trash)h+='<div class="resource-attachment">'+(r.module?'<a href="#m'+r.module+'">Модуль '+r.module+'</a><button class="btn" type="button" data-a="resource-detach" data-k="'+esc(r.id)+'" aria-label="Відкріпити від модуля: '+esc(r.title)+'">Відкріпити</button>':'<span class="inbox-label">У Вхідних</span><button class="btn" type="button" data-a="resource-attach" data-k="'+esc(r.id)+'" data-m="'+suggested+'">До модуля '+suggested+'</button>')+'</div>';
   h+='<details class="rc-more" data-resource-details="'+esc(r.id)+'"'+(LIB_OPEN.has(r.id)?' open':'')+'><summary data-a="resource-remember" data-k="'+esc(r.id)+'">Нотатки та деталі'+(st.note?' · є нотатка':'')+'</summary>'+(r.desc?'<p class="hint">'+esc(r.desc)+'</p>':'')+youtubePlaceholder(r);
@@ -1789,7 +1901,7 @@ function handleLibrarySubmit(form){
   }catch(e){toast(e.message||'Не вдалося зберегти матеріал')}
   return true;
 }
-function createBackup(){if(ACADEMIC_UI)ACADEMIC_UI.capture();syncTimerSnapshot();ensureLibrary(S);return {app:'Рік психології',version:1,exportedAt:new Date().toISOString(),state:S}}
+function createBackup(){captureStudyView();if(ACADEMIC_UI)ACADEMIC_UI.capture();syncTimerSnapshot();ensureLibrary(S);return {app:'Рік психології',version:1,exportedAt:new Date().toISOString(),state:S}}
 function quizSectionHTML(n){var qs=Array.isArray(S.quiz[n])?S.quiz[n]:[],res=S.quizResults[n],h='<section class="sec"><h2>Тести та контрольна робота <small>'+qs.length+' питань у банку</small></h2><p class="hint">У стартовому банку є 5 запитань із поясненнями. Тренувальний тест допомагає перевірити себе, контрольна робота фіксує результат; прохідний орієнтир — 70%. Можеш додавати власні питання.</p><div class="row" style="margin:12px 0"><button class="btn small" type="button" data-a="quiz-start" data-m="'+n+'" data-mode="practice"'+(!qs.length?' disabled':'')+'>Тренувальний тест</button><button class="btn small primary" type="button" data-a="quiz-start" data-m="'+n+'" data-mode="exam"'+(qs.length<3?' disabled':'')+'>Контрольна робота</button></div>';
   if(ACTIVE_QUIZ&&ACTIVE_QUIZ.n===n){h+='<div class="card pad"><h3>'+(ACTIVE_QUIZ.mode==='exam'?'Контрольна робота':'Тренувальний тест')+'</h3>';
     if(ACTIVE_QUIZ.result){var rr=ACTIVE_QUIZ.result;h+='<p class="doneline">Результат: '+rr.correct+' із '+rr.total+' · '+rr.score+'%</p><p>'+(rr.score>=70?'Пороговий результат досягнуто.':'Результат нижче 70%. Переглянь пояснення та спробуй ще раз.')+'</p>';rr.details.forEach(function(d){h+='<div class="quiz-q"><b>'+(d.ok?'Правильно':'Потрібно повторити')+': '+esc(d.question)+'</b><p class="hint">'+esc(d.explanation)+'</p></div>'});h+='<button class="btn primary" data-a="quiz-start" data-m="'+n+'" data-mode="'+ACTIVE_QUIZ.mode+'">Спробувати ще раз</button>';
@@ -1822,14 +1934,14 @@ var importArmed=0;
 async function exportBackup(){var name='rik-psykholohii-backup-'+iso(new Date())+'.json',json=JSON.stringify(createBackup(),null,2);
   try{var url=URL.createObjectURL(new Blob([json],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},1000);toast('Резервну копію створено')}catch(e){toast('Не вдалося створити резервну копію')}}
 function decodeBackup(text){var data=JSON.parse(text),state=data;if(isRecord(data)&&Object.prototype.hasOwnProperty.call(data,'state')){if(data.app!=='Рік психології'||data.version!==1)throw new Error('version');state=data.state}return norm(validateState(state))}
-function applyBackup(candidate){
+function applyBackup(candidate){captureStudyView();
   if(STORAGE_STALE){updateStorageStatus();return false}try{if(localStorage.getItem(KEY)!==STORAGE_BASELINE){markStorageConflict();return false}}catch(e){STORAGE_ERROR='Браузер не надав доступ до збережених даних.';updateStorageStatus();return false}syncTimerSnapshot();
   if(ACADEMIC_UI)ACADEMIC_UI.capture();
   candidate=norm(validateState(candidate));ensureLibrary(candidate);seedLearningContent(candidate);candidate.updatedAt=Date.now();
   var previous=STORAGE_BLOCKED&&STORAGE_RAW!==null?STORAGE_RAW:JSON.stringify(S);
   try{localStorage.setItem(KEY+'-pre-import',previous);localStorage.setItem(KEY,JSON.stringify(candidate))}
   catch(e){STORAGE_ERROR='Не вдалося відновити дані на пристрої. Поточний стан не замінено.';updateStorageStatus();return false}
-  clearTimeout(EXP_TIMER);EXP=null;if(ACADEMIC_UI)ACADEMIC_UI.reset();S=candidate;STORAGE_BASELINE=JSON.stringify(candidate);STORAGE_BLOCKED=false;STORAGE_RAW=null;STORAGE_ERROR='';ACTIVE_QUIZ=null;CARD_INDEX=0;CARD_REVEALED=false;REVIEW_ID='';REVIEW_MODULE=-1;READING_MODULE=0;restoreTimers();applyTheme();setSync();return true;
+  clearTimeout(EXP_TIMER);EXP=null;if(ACADEMIC_UI)ACADEMIC_UI.reset();S=candidate;STORAGE_BASELINE=JSON.stringify(candidate);STORAGE_BLOCKED=false;STORAGE_RAW=null;STORAGE_ERROR='';ACTIVE_QUIZ=null;CARD_INDEX=0;CARD_REVEALED=false;REVIEW_ID='';REVIEW_MODULE=-1;READING_MODULE=0;STUDY_VIEW=null;restoreTimers();applyTheme();setSync();return true;
 }
 function importBackup(){
   var input=$('#backup-file'),file=input&&input.files&&input.files[0];if(!file){toast('Спочатку обери JSON-файл');return}
@@ -1878,17 +1990,19 @@ function initMotion(root){
 }
 
 function render(){
-  var r=route(),keep=sig(document.activeElement),moduleMatch=/^m(\d+)$/.exec(r),module=moduleMatch?+moduleMatch[1]:0;if(!RESTORING_READING&&module&&READING_MODULE===module)captureReadingView(module);if(module){prepareModuleReading(module)}READING_MODULE=module;
+  captureStudyView();var r=route(),keep=sig(document.activeElement),moduleMatch=/^m(\d+)$/.exec(r),module=moduleMatch?+moduleMatch[1]:0;if(!RESTORING_READING&&module&&READING_MODULE===module)captureReadingView(module);if(module){prepareModuleReading(module)}READING_MODULE=module;
+  document.body.classList.toggle('study-active',r==='study');
   renderNav();
   var main=$('#main');
   if(r==='cards'&&learnQuery('entry')){var selectedCard=S.cards.find(function(c){return c.id===learnQuery('entry')});if(selectedCard)Object.assign(CARD_VIEW,{q:selectedCard.front,module:'',trash:!!S.cardTrash[selectedCard.id],limit:S.cards.length})}
-  main.innerHTML=storageNoticeHTML()+pwaNoticeHTML()+learningSessionHTML()+(r==='academic'?ACADEMIC_UI.view():r==='overview'?ACADEMIC_UI.resumeHTML()+vOverview():r==='modules'?vModules():r==='analytics'?vAnalytics():r==='week'?vWeek():r==='glossary'?vGlossary():r==='guide'?vGuide():r==='library'?vLibrary():r==='cards'?vCards():r==='cases'?vCases():r==='research'?vResearch():r==='concepts'?vConcepts():r==='calendar'?vCalendar():r==='backup'?vBackup():r==='review'?vReview():r==='achievements'?vAchievements():r==='focus'?vFocus():r==='ideas'||r==='journal'||r==='feynman'?vLearningRecords(r):r==='sessions'?vSessions():r==='experiments'?vExperiments():r==='critical'?vCritical():vModule(+r.slice(1)));
-  var mn=$('#mobile-nav');if(mn){mn.innerHTML=mobileNavHTML();mn.hidden=r==='focus'}
+  main.innerHTML=storageNoticeHTML()+pwaNoticeHTML()+(r==='study'?'':learningSessionHTML())+(r==='study'?vStudy():r==='academic'?ACADEMIC_UI.view():r==='overview'?ACADEMIC_UI.resumeHTML()+vOverview():r==='modules'?vModules():r==='analytics'?vAnalytics():r==='week'?vWeek():r==='glossary'?vGlossary():r==='guide'?vGuide():r==='library'?vLibrary():r==='cards'?vCards():r==='cases'?vCases():r==='research'?vResearch():r==='concepts'?vConcepts():r==='calendar'?vCalendar():r==='backup'?vBackup():r==='review'?vReview():r==='achievements'?vAchievements():r==='focus'?vFocus():r==='ideas'||r==='journal'||r==='feynman'?vLearningRecords(r):r==='sessions'?vSessions():r==='experiments'?vExperiments():r==='critical'?vCritical():vModule(+r.slice(1)));
+  var mn=$('#mobile-nav');if(mn){mn.innerHTML=mobileNavHTML();mn.hidden=r==='focus'||r==='study'}
   if(r==='glossary'&&CMD_PENDING_GLOSSARY){var gq=$('#gl-q');if(gq){gq.value=CMD_PENDING_GLOSSARY;$('#gl-list').innerHTML=glListHTML(gq.value)}CMD_PENDING_GLOSSARY=''}
   if(CMD_FOCUS_AFTER_RENDER){var focusTarget=CMD_FOCUS_AFTER_RENDER;CMD_FOCUS_AFTER_RENDER='';setTimeout(function(){var target=focusTarget==='card'?document.querySelector('[data-form=card] [name=front]'):focusTarget==='term'?$('#gl-t'):null;if(target)target.focus()},30)}
   applyReading();
-  initMotion(main);
+  if(r!=='study')initMotion(main);
   main.querySelectorAll('textarea.ta').forEach(grow);
+  if(r==='study')restoreStudyView();else STUDY_VIEW=null;
   refreshPWAStatus();centerModuleSwitcher();syncModuleHeader();if(module&&!RESTORING_READING)restoreReadingView(module);
   if(keep){var el=document.querySelector(keep);if(el&&el.focus)try{el.focus({preventScroll:true})}catch(e){}}
 }
@@ -1902,7 +2016,7 @@ function downloadTextFile(name,content,type){try{var blob=new Blob([content],{ty
 function pwaNoticeHTML(){return '<aside class="pwa-notice" id="pwa-notice" role="status"'+(PWA_REG&&PWA_REG.waiting&&!PWA_DISMISSED?'':' hidden')+'><p>Доступна нова версія. Онови, коли завершиш поточну дію.</p><div class="row"><button class="btn primary" type="button" data-a="pwa-update">Оновити</button><button class="btn" type="button" data-a="pwa-later">Пізніше</button></div></aside>'}
 function refreshPWAStatus(){var el=$('#pwa-status');if(el)el.textContent=PWA_STATUS||'Перевіряю автономний режим…';var notice=$('#pwa-notice');if(notice)notice.hidden=!(PWA_REG&&PWA_REG.waiting&&!PWA_DISMISSED);document.querySelectorAll('[data-a="pwa-install"]').forEach(function(b){b.hidden=!PWA_INSTALL});document.querySelectorAll('[data-a="pwa-update"]').forEach(function(b){b.hidden=!(PWA_REG&&PWA_REG.waiting)})}
 function hasUnsavedDraft(skipAuth){if(document.querySelector('input[name^="qa-"]:checked'))return true;return Array.from(document.querySelectorAll('form input,form textarea,form select')).some(function(el){if(el.disabled||(skipAuth&&el.closest&&el.closest('#auth-dialog'))||(el.closest&&el.closest('dialog:not([open])'))||el.dataset.bind||el.dataset.toolField||['hidden','submit','button','file'].indexOf(el.type)>-1)return false;if(el.tagName==='SELECT'){var opts=Array.from(el.options),index=-1;opts.forEach(function(o,i){if(o.defaultSelected)index=i});if(index===-1)index=opts.findIndex(function(o){return !o.disabled});return el.selectedIndex!==index}if(el.type==='checkbox'||el.type==='radio')return el.checked!==el.defaultChecked;return el.value!==el.defaultValue})}
-function applyPWAUpdate(){if(ACADEMIC_UI)ACADEMIC_UI.capture();if(!PWA_REG||!PWA_REG.waiting)return false;if(hasUnsavedDraft()){toast('Спершу збережи або закрий заповнену форму');return false}captureReadingView(READING_MODULE);if(!saveLocal()){toast('Спершу збережи резервну копію: оновлення зачекає');return false}PWA_UPDATING=true;PWA_REG.waiting.postMessage({type:'APPLY_UPDATE'});return true}
+function applyPWAUpdate(){captureStudyView();if(ACADEMIC_UI)ACADEMIC_UI.capture();if(!PWA_REG||!PWA_REG.waiting)return false;if(hasUnsavedDraft()){toast('Спершу збережи або закрий заповнену форму');return false}captureReadingView(READING_MODULE);if(!saveLocal()){toast('Спершу збережи резервну копію: оновлення зачекає');return false}PWA_UPDATING=true;PWA_REG.waiting.postMessage({type:'APPLY_UPDATE'});return true}
 function initPWA(){
  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();PWA_INSTALL=e;refreshPWAStatus()});
  window.addEventListener('appinstalled',function(){PWA_INSTALL=null;toast('Програму встановлено');refreshPWAStatus()});
@@ -1956,8 +2070,8 @@ function executeCommand(index){
 (function(){var d=$('#command-dialog');if(d)d.addEventListener('click',function(e){if(e.target===d)d.close()})})();
 
 window.addEventListener('scroll',queueReadingSave,{passive:true});
-window.addEventListener('pagehide',function(){captureReadingView(READING_MODULE);saveLocal()});
-document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden'){captureReadingView(READING_MODULE);saveLocal()}});
+window.addEventListener('pagehide',function(){captureStudyView();captureReadingView(READING_MODULE);saveLocal()});
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden'){captureStudyView();captureReadingView(READING_MODULE);saveLocal()}});
 (function(){var dialog=$('#recall-dialog');if(dialog)dialog.addEventListener('cancel',function(){dismissReflection(dialog.dataset.resourceId)});var header=$('.topbar');if(header&&window.ResizeObserver){var observer=new ResizeObserver(syncModuleHeader);observer.observe(header)}})();
 window.addEventListener('hashchange',renderPageNavigation);
 
@@ -1989,6 +2103,7 @@ document.addEventListener('keydown',function(e){
   var target=e.target,tag=(target&&target.tagName||'').toLowerCase();
   if(tag==='input'||tag==='textarea'||tag==='select'||(target&&target.isContentEditable))return;
   var r=route();
+  if(r==='study'&&e.key==='Escape'){var source=studyCurrent();e.preventDefault();location.hash=source&&source.module?'#m'+source.module:'#modules';return}
   if(r==='review'){
     if(e.code==='Space'||e.key===' '){if(tag==='button'||tag==='a'||tag==='summary')return;e.preventDefault();revealReviewCard();return}
     if(e.key==='1'||e.key==='2'){if(r!=='review')return;e.preventDefault();var current=currentReviewCard();if(!CARD_REVEALED){toast('Спочатку відкрий відповідь картки');return}if(current)gradeReviewCard(current.id,e.key==='2');return}
@@ -2021,6 +2136,8 @@ document.addEventListener('click',function(e){
   if(['goal-dialog','matdlg','attach-dialog','card-dialog','recall-dialog'].indexOf(e.target.id)>-1){if(e.target.id==='recall-dialog')dismissReflection(e.target.dataset.resourceId);e.target.close();return}
   var el=e.target.closest('[data-a]');if(!el)return;
   var a=el.dataset.a,n=+el.dataset.m;
+  if(a==='study-note'){var sn=$('#study-note');if(sn){var panel=sn.closest('details');if(panel)panel.open=true;sn.focus()}return}
+  if(a.indexOf('study-')===0){studyAction(a,el.dataset.step);return}
   if(handleLibraryAction(a,el))return;
   if(a==='resource-complete'){finishResource(el.dataset.k);return}
   if(a==='card-new'){openCardDialog(el.dataset.k||'',el.dataset.m===undefined?undefined:n);return}
@@ -2291,11 +2408,11 @@ function experimentStageHTML(){if(!EXP)return '<p class="empty">Обери де�
 }
 function renderExperiment(){var host=$('#experiment-stage');if(!host||route()!=='experiments')return;host.innerHTML=experimentStageHTML();var input=host.querySelector('input'),heading=host.querySelector('h2');if(input)input.focus();else if(heading)heading.focus({preventScroll:true})}
 function vExperiments(){return '<div class="page"><p class="eyebrow">Безпечні локальні демонстрації</p><h1>Інтерактивні експерименти</h1><p class="lead">Навчальні адаптації без клінічної інтерпретації. При зміні вкладки або сторінки поточна проба призупиняється.</p>'+difficultyHTML()+'<section class="sec card pad"><h2>Інтерференція Струпа</h2><p>16 проб: обирай колір літер, а не значення слова. Для відмінностей сприйняття кольору доступний окремий просторовий варіант: визначай положення слова, а не його значення.</p><div class="row"><button class="btn" type="button" data-a="learn-experiment" data-kind="stroop">Почати: кольори</button><button class="btn" type="button" data-a="learn-experiment" data-kind="stroop" data-mode="spatial">Почати: без кольорів</button></div>'+experimentExplanation('stroop')+'</section><section class="sec card pad"><h2>Короткочасне утримання</h2><p>Три послідовності: 3, 5 і 7 цифр. Дивись 4 секунди, потім введи їх з пам’яті. Перед кожною наступною пробою можна відпочити.</p><button class="btn" type="button" data-a="learn-experiment" data-kind="memory">Почати: цифри</button>'+experimentExplanation('memory')+'</section><section class="sec card pad" id="experiment-stage" aria-label="Поточна демонстрація">'+experimentStageHTML()+'</section><section class="sec"><h2>Мої спостереження</h2>'+(S.experimentResults.length?S.experimentResults.slice().reverse().map(function(x){return '<article class="card pad learn-entry" data-tool-entry="'+esc(x.id)+'" tabindex="-1"><h3>'+esc(x.date)+' · '+(x.kind==='memory'?'Цифри':x.mode==='spatial'?'Просторова інтерференція':'Кольорова інтерференція')+'</h3><p>'+esc(experimentSummary(x))+'</p><button class="btn small" type="button" data-a="learn-delete" data-type="experimentResults" data-k="'+esc(x.id)+'">Видалити</button></article>'}).join(''):'<p class="empty">Після завершення тут з’являться результати. Немає рейтингу або нормативів.</p>')+'</section></div>'}
-function startLearningSession(minutes){if([0,5,10,15,25].indexOf(minutes)<0)return false;if(timerActive()||focusActive()||S.learningSession.status==='active'){toast('Спершу заверши поточну сесію або повернися до неї');return false}if(minutes)resetTimerRound(minutes*60);mutate(function(s){s.learningSession={id:learnID(),status:'active',duration:minutes,mode:minutes?'timer':'untimed',timerId:minutes?T.session:'',worked:'',repeat:'',startedAt:Date.now()}},false,false,true);if(minutes)timerAction('tm-start');else render();location.hash=minutes===5?'#review':resumeHref(resumeTarget());return true}
+function startLearningSession(minutes){if([0,5,10,15,25].indexOf(minutes)<0)return false;if(timerActive()||focusActive()||S.learningSession.status==='active'){toast('Спершу заверши поточну сесію або повернися до неї');return false}if(minutes)resetTimerRound(minutes*60);mutate(function(s){s.learningSession={id:learnID(),status:'active',duration:minutes,mode:minutes?'timer':'untimed',timerId:minutes?T.session:'',worked:'',repeat:'',startedAt:Date.now()}},false,false,true);if(minutes)timerAction('tm-start');else render();location.hash=minutes===5?'#review':studyContinueHref(resumeTarget());return true}
 function completeLearningSession(timerId){var p=S.learningSession;if(p.status!=='active'||p.mode==='timer'&&p.timerId!==timerId)return false;mutate(function(s){s.learningSession.status='summary';s.learningSession.finishedAt=Date.now()},false,false,true);return true}
 function finishLearningSession(){var p=S.learningSession;if(p.status!=='active')return false;if(p.mode==='timer'&&p.timerId===T.session){timerAction('tm-credit')}else completeLearningSession(p.timerId||'');render();return true}
 function learningSessionHTML(){var p=S.learningSession;if(p.status==='active')return '<aside class="learning-session" aria-label="Поточна навчальна сесія"><b>'+(p.duration?p.duration+' хв · '+(T.running?'навчання':'пауза'):'Навчання без таймера')+'</b><div class="row">'+(p.mode==='timer'&&p.timerId===T.session?'<button class="btn small" type="button" data-a="'+(T.running?'tm-pause':'tm-start')+'">'+(T.running?'Пауза':'Продовжити')+'</button>':'')+'<button class="btn small" type="button" data-a="learn-session-finish">Завершити сесію</button><a href="#sessions">Мій план</a></div></aside>';if(p.status==='summary'&&route()!=='sessions')return '<aside class="learning-session" role="status">Сесію завершено. Можна перепочити. <a href="#sessions">Короткий підсумок →</a></aside>';return ''}
-function vSessions(){var p=S.learningSession;return '<div class="page"><p class="eyebrow">Навчання у власному темпі</p><h1>Гнучкі сесії</h1><p class="lead">Обери посильний крок. Повні хвилини зараховує чинний навчальний таймер; пропуски не штрафуються.</p><div class="learn-session-options">'+[[5,'Швидке повторення','Кілька карток із черги повторення.'],[15,'Стандартна сесія','Один матеріал і коротке пояснення своїми словами.'],[25,'Поглиблена сесія','Матеріал, джерело, нотатка та відкрите питання.'],[0,'Без таймера','Навчайся без відліку; час і XP автоматично не нараховуються.']].map(function(x){return '<article class="card pad"><h2>'+(x[0]?x[0]+' хв — ':'')+x[1]+'</h2><p>'+x[2]+'</p><button class="btn" type="button" data-a="learn-session" data-k="'+x[0]+'">Почати</button></article>'}).join('')+'</div>'+(p.status==='summary'||p.status==='finished'?'<section class="sec card pad"><h2>Підсумок сесії</h2><p class="hint">Можна залишити порожнім і просто відпочити. Введення зберігається.</p><label>Що опрацював?<textarea class="ta" maxlength="4000" data-session-field="worked">'+esc(p.worked||'')+'</textarea></label><label>Що повторити?<textarea class="ta" maxlength="4000" data-session-field="repeat">'+esc(p.repeat||'')+'</textarea></label><div class="row"><button class="btn" type="button" data-a="learn-session-close">Завершити на сьогодні</button><button class="btn" type="button" data-a="learn-session-continue">Ще одна сесія</button><a href="#journal">До щоденника</a></div></section>':'')+'<div class="row sec"><a class="btn" href="'+esc(resumeHref(resumeTarget()))+'">Продовжити матеріал</a><a class="btn" href="#week">Тиждень і таймер</a><a class="btn" href="#focus">Режим фокусу</a></div></div>'}
+function vSessions(){var p=S.learningSession;return '<div class="page"><p class="eyebrow">Навчання у власному темпі</p><h1>Гнучкі сесії</h1><p class="lead">Обери посильний крок. Повні хвилини зараховує чинний навчальний таймер; пропуски не штрафуються.</p><div class="learn-session-options">'+[[5,'Швидке повторення','Кілька карток із черги повторення.'],[15,'Стандартна сесія','Один матеріал і коротке пояснення своїми словами.'],[25,'Поглиблена сесія','Матеріал, джерело, нотатка та відкрите питання.'],[0,'Без таймера','Навчайся без відліку; час і XP автоматично не нараховуються.']].map(function(x){return '<article class="card pad"><h2>'+(x[0]?x[0]+' хв — ':'')+x[1]+'</h2><p>'+x[2]+'</p><button class="btn" type="button" data-a="learn-session" data-k="'+x[0]+'">Почати</button></article>'}).join('')+'</div>'+(p.status==='summary'||p.status==='finished'?'<section class="sec card pad"><h2>Підсумок сесії</h2><p class="hint">Можна залишити порожнім і просто відпочити. Введення зберігається.</p><label>Що опрацював?<textarea class="ta" maxlength="4000" data-session-field="worked">'+esc(p.worked||'')+'</textarea></label><label>Що повторити?<textarea class="ta" maxlength="4000" data-session-field="repeat">'+esc(p.repeat||'')+'</textarea></label><div class="row"><button class="btn" type="button" data-a="learn-session-close">Завершити на сьогодні</button><button class="btn" type="button" data-a="learn-session-continue">Ще одна сесія</button><a href="#journal">До щоденника</a></div></section>':'')+'<div class="row sec"><a class="btn" href="'+esc(studyContinueHref(resumeTarget()))+'">Продовжити матеріал</a><a class="btn" href="#week">Тиждень і таймер</a><a class="btn" href="#focus">Режим фокусу</a></div></div>'}
 
 /* Авторські навчальні орієнтири: три вручну підготовлені варіанти для кожного модуля. */
 var MODULE_EXPLANATIONS=[
@@ -2314,8 +2431,8 @@ var MODULE_EXPLANATIONS=[
 ];
 function difficultyHTML(){return '<div class="row learning-level" role="group" aria-label="Рівень пояснення">'+[['simple','Просто'],['standard','Стандартно'],['deep','Поглиблено']].map(function(x){return '<button class="btn small" type="button" data-a="learn-level" data-k="'+x[0]+'" aria-pressed="'+(S.explanationLevel===x[0])+'">'+x[1]+'</button>'}).join('')+'</div>'}
 function moduleExplanationHTML(n){return '<section class="card pad sec" data-reading-anchor="explanation"><h2>Орієнтир до тем модуля</h2>'+difficultyHTML()+'<p class="learn-prose">'+esc(MODULE_EXPLANATIONS[n-1][['simple','standard','deep'].indexOf(S.explanationLevel)])+'</p><p class="hint">Авторський навчальний огляд. Джерела й матеріали для перевірки — нижче у модулі. Перемикач змінює цей вбудований текст; зовнішні URL він не переказує.</p><a class="btn small" href="#feynman?module='+n+'">Пояснити своїми словами</a></section>'}
-function readingControlsHTML(){var r=S.reading;return '<section class="reading-controls" data-reading-anchor="reading-controls"><div class="row"><button class="btn" type="button" data-a="learn-reading" aria-pressed="'+!!r.enabled+'">'+(r.enabled?'Вийти з режиму читання':'Режим читання')+'</button><a class="btn small" href="#overview">Сьогодні</a><button class="btn small" type="button" '+(route()==='academic'?'data-ac-action="notes"':'data-a="learn-module-notes"')+'>До нотаток</button></div><details'+(r.enabled?' open':'')+'><summary>Параметри читання</summary><div class="learn-filters">'+[['width','Ширина колонки',48,90,1,'знаків'],['size','Розмір шрифту',16,26,1,'px'],['line','Міжрядковий інтервал',1.4,2.2,.1,'']].map(function(x){return '<label>'+x[1]+' <output id="reading-'+x[0]+'">'+r[x[0]]+' '+x[5]+'</output><input class="inp" type="range" min="'+x[2]+'" max="'+x[3]+'" step="'+x[4]+'" value="'+r[x[0]]+'" data-reading-setting="'+x[0]+'"></label>'}).join('')+themeSettingHTML('reading-theme')+'</div></details></section>'}
-function applyReading(){var enabled=!!S.reading.enabled&&(/^m\d+$/.test(route())||route()==='academic');document.body.classList.toggle('reading-enabled',enabled);var root=document.documentElement;if(root&&root.style&&root.style.setProperty){root.style.setProperty('--reading-width',S.reading.width+'ch');root.style.setProperty('--reading-size',S.reading.size+'px');root.style.setProperty('--reading-line',S.reading.line)}}
+function readingControlsHTML(){var r=S.reading;return '<section class="reading-controls" data-reading-anchor="reading-controls"><div class="row"><button class="btn" type="button" data-a="learn-reading" aria-pressed="'+!!r.enabled+'">'+(r.enabled?'Вийти з режиму читання':'Режим читання')+'</button><a class="btn small" href="#overview">Сьогодні</a><button class="btn small" type="button" '+(route()==='academic'?'data-ac-action="notes"':route()==='study'?'data-a="study-note"':'data-a="learn-module-notes"')+'>До нотаток</button></div><details'+(r.enabled?' open':'')+'><summary>Параметри читання</summary><div class="learn-filters">'+[['width','Ширина колонки',48,90,1,'знаків'],['size','Розмір шрифту',16,26,1,'px'],['line','Міжрядковий інтервал',1.4,2.2,.1,'']].map(function(x){return '<label>'+x[1]+' <output id="reading-'+x[0]+'">'+r[x[0]]+' '+x[5]+'</output><input class="inp" type="range" min="'+x[2]+'" max="'+x[3]+'" step="'+x[4]+'" value="'+r[x[0]]+'" data-reading-setting="'+x[0]+'"></label>'}).join('')+themeSettingHTML('reading-theme')+'</div></details></section>'}
+function applyReading(){var enabled=!!S.reading.enabled&&(/^m\d+$/.test(route())||route()==='academic'||route()==='study');document.body.classList.toggle('reading-enabled',enabled);var root=document.documentElement;if(root&&root.style&&root.style.setProperty){root.style.setProperty('--reading-width',S.reading.width+'ch');root.style.setProperty('--reading-size',S.reading.size+'px');root.style.setProperty('--reading-line',S.reading.line)}}
 function changeReading(key,value){var ranges={width:[48,90],size:[16,26],line:[1.4,2.2]};if(key==='enabled')value=!!value;else{if(!ranges[key]||!Number.isFinite(+value)||+value<ranges[key][0]||+value>ranges[key][1])return false;value=+value}if(READING_MODULE)captureReadingView(READING_MODULE);mutate(function(s){s.reading[key]=value},false,false,true);applyReading();if(READING_MODULE)restoreReadingView(READING_MODULE);return true}
 function searchNorm(text){return String(text||'').toLocaleLowerCase('uk').replace(/[’‘`ʼ\u02bc\u0027]/g,"'").replace(/\s+/g,' ').trim()}
 function searchNear(a,b){if(Math.abs(a.length-b.length)>1)return false;var i=0,j=0,errors=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue}if(++errors>1)return false;if(a.length>=b.length)i++;if(b.length>=a.length)j++}return errors+(i<a.length||j<b.length?1:0)<=1}
@@ -2328,7 +2445,7 @@ function learningCommandItems(){var items=[];function add(target,title,sub,type,
   Object.keys(S.work).forEach(function(k){var n=learnModule(k.split('-')[0]);if(n)add('m'+n+'?panel=work','Практична робота · модуль '+n,S.work[k],'Чернетка роботи')});
   Object.keys(S.quiz).forEach(function(n){S.quiz[n].forEach(function(q){add('m'+n+'?panel=quiz',q.question,q.explanation||'Тест модуля','Навчальна вправа',q.question+' '+q.choices.join(' '))})});
   Object.keys(S.tasks).forEach(function(n){S.tasks[n].forEach(function(t){add('m'+n+'?panel=tasks',t.title,t.desc||'Завдання модуля','Практичне завдання')})});
-  allResources().forEach(function(r){add((r.module?'m'+r.module:'library')+'?material='+encodeURIComponent(r.id),r.title,r.desc||r.url,'Матеріал',[r.desc,r.tags.join(' '),getResourceState(r.id).note||''].join(' '))});
+  allResources().forEach(function(r){add(studyHref(r).slice(1),r.title,r.desc||r.url,'Матеріал',[r.desc,r.tags.join(' '),getResourceState(r.id).note||''].join(' '))});
   Object.keys(S.notes).forEach(function(n){add('m'+n+'?notes=1','Нотатки модуля '+n,S.notes[n],'Нотатка')});
   Object.keys(S.topicNotes).forEach(function(k){var p=k.split('-'),m=MODS[+p[0]-1];if(m&&m.topics[+p[1]])add('m'+p[0]+'?topic='+encodeURIComponent(k),m.topics[+p[1]],S.topicNotes[k],'Нотатка теми')});
   if(S.courseNotes)add('overview?notes=1','Нотатки до курсу',S.courseNotes,'Нотатка');
@@ -2339,7 +2456,7 @@ function learningCommandItems(){var items=[];function add(target,title,sub,type,
   add('experiments','Інтерференція Струпа','Кольорова й просторова демонстрація','Експеримент','Струп увага інтерференція');add('experiments','Короткочасне утримання цифр','Демонстрація пам’яті','Експеримент');
   [['ideas','Занотувати ідею','Швидко зберегти думку'],['journal','Навчальний щоденник','Зрозумів, труднощі, повторення'],['feynman','Режим Фейнмана','Пояснення своїми словами'],['sessions','Обрати сесію','5, 15, 25 хв або без таймера'],['critical','Критичне мислення','Шість вправ із поясненнями'],['experiments','Інтерактивні експерименти','Інтерференція та пам’ять']].forEach(function(p){add(p[0],p[1],p[2],'Навчальний інструмент')});
   [0,5,10,15,25].forEach(function(m){items.push({kind:'action',action:'learning-session',minutes:m,title:m?'Почати сесію на '+m+' хв':'Навчатися без таймера',sub:'Сесії у власному темпі',type:'Швидка дія',icon:'◷',search:'сесія таймер навчання'})});
-  items.push({kind:'route',target:resumeHref(resumeTarget()).slice(1),title:'Продовжити навчання',sub:'Повернутися до місця зупинки',type:'Швидка дія',icon:'→'});
+  items.push({kind:'route',target:studyContinueHref(resumeTarget()).slice(1),title:'Продовжити навчання',sub:'Повернутися до місця зупинки',type:'Швидка дія',icon:'→'});
   if(/^m\d+$/.test(route()))items.push({kind:'action',action:'reading',title:'Перемкнути режим читання',sub:'Шрифт, ширина, міжрядковий інтервал',type:'Швидка дія',icon:'Aa'});return items;
 }
 function focusLearningContext(){var id=learnQuery('entry'),node=id&&Array.prototype.find.call(document.querySelectorAll('[data-tool-entry]'),function(el){return el.dataset.toolEntry===id});if(!node&&learnQuery('notes'))node=/^m\d+$/.test(route())?$('#notes-'+route().slice(1)):$('#course-notes');if(!node&&learnQuery('topic')){var k=learnQuery('topic');node=Array.prototype.find.call(document.querySelectorAll('[data-bind="topicNotes"]'),function(el){return el.dataset.k===k})}if(!node&&learnQuery('panel'))node=Array.prototype.find.call(document.querySelectorAll('[data-module-panel]'),function(el){return el.dataset.modulePanel===learnQuery('panel')});if(node){if(node.tagName==='DETAILS')node.open=true;node.tabIndex=-1;for(var parent=node.parentElement;parent;parent=parent.parentElement){if(parent.tagName==='DETAILS')parent.open=true;if(parent.classList)parent.classList.add('is-visible')}node.scrollIntoView({block:'start',behavior:'instant'});node.focus({preventScroll:true});return true}return false}
@@ -2385,7 +2502,7 @@ document.addEventListener('visibilitychange',function(){if(document.visibilitySt
 
 function commandMatches(q){return baseCommandMatches('').concat(learningCommandItems(),ACADEMIC_UI?ACADEMIC_UI.searchItems():[]).map(function(x,i){return {item:x,rank:searchRank(x,q),index:i}}).filter(function(x){return x.rank>0}).sort(function(a,b){return b.rank-a.rank||a.index-b.index}).slice(0,80).map(function(x){return x.item})}
 
-window.RikStudy={closeMenu:function(){setMenu(false)},prepareAuthRedirect:function(){if(ACADEMIC_UI)ACADEMIC_UI.capture();if(hasUnsavedDraft(true)){toast('Перед входом через Google збережи або закрий інші заповнені форми');return false}captureReadingView(READING_MODULE);var saved=saveLocal();if(!saved)toast('Не вдалося зберегти навчальні дані. Перед входом завантаж резервну копію.');return saved}};
+window.RikStudy={closeMenu:function(){setMenu(false)},prepareAuthRedirect:function(){captureStudyView();if(ACADEMIC_UI)ACADEMIC_UI.capture();if(hasUnsavedDraft(true)){toast('Перед входом через Google збережи або закрий інші заповнені форми');return false}captureReadingView(READING_MODULE);var saved=saveLocal();if(!saved)toast('Не вдалося зберегти навчальні дані. Перед входом завантаж резервну копію.');return saved}};
 
 
 var ACADEMIC_UI=window.RikAcademicUI.create({

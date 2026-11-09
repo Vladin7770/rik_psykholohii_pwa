@@ -122,7 +122,7 @@ test('Search indexes original resource details, personal notes and every new rec
  const h=setup();const rows=[['ideas',{text:'унікальнаідея'}],['journal',{date:'2026-11-09',understood:'унікальнийщоденник'}],['feynman',{title:'Поняття',explanation:'унікальнийфейнман'}],['research',{title:'Стаття',sample:'унікальнавибірка'}],['concepts',{a:'Вузол',b:'Інший',relation:'зв’язок',note:'унікальнийзв’язок'}]];
  for(const [type,data] of rows){const x=save(h,type,data),token=Object.values(data).find(v=>v.startsWith('унікаль'));assert.ok(h.api.commandMatches(token).some(i=>i.target===type+'?entry='+x.id),type)}
  assert.ok(h.api.commandMatches('Збережена нотатка').some(i=>i.target==='m3?notes=1'));
- assert.ok(h.api.commandMatches('Матеріал для перевірки').some(i=>i.target==='m3?material=module-3-m-legacy'));
+ assert.ok(h.api.commandMatches('Матеріал для перевірки').some(i=>i.target==='study?material=module-3-m-legacy'));
  assert.ok(h.api.commandMatches('інтерференція').some(i=>i.target==='experiments'));
  assert.ok(h.api.commandMatches('вибірки').some(i=>i.target==='critical?entry=selection'));
 });

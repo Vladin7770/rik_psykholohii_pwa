@@ -136,7 +136,7 @@ test('Resume prefers the last visited module over the first unfinished one', () 
   const h = setup();
   navigate(h, '#m7'); navigate(h, '#overview');
   assert.equal(h.api.resumeTarget().module, 7);
-  assert.match(h.nodes.get('main').innerHTML, /href="#m7">Продовжити/);
+  assert.match(h.nodes.get('main').innerHTML, /href="#study\?material=builtin-media-7-0&amp;resume=1">Продовжити/);
   assert.equal(h.api.state.act['2026-11-08'], undefined);
   const reloaded = harness(h.storage.get(KEY), { now: NOW });
   assert.equal(reloaded.api.resumeTarget().module, 7);
@@ -150,7 +150,7 @@ test('Intentional source opening remembers its stable material ID, including fro
   assert.equal(result.resource.id, 'module-3-m-legacy');
   assert.equal(h.api.state.moduleBookmarks[3], 'module-3-m-legacy');
   assert.equal(h.api.state.act['2026-11-08'], undefined);
-  assert.equal(h.api.resumeHref(result), '#m3?material=module-3-m-legacy');
+  assert.equal(h.api.resumeHref(result), '#study?material=module-3-m-legacy');
 });
 
 test('Focusing an embedded player remembers its material without using a player API', () => {

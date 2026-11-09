@@ -226,7 +226,9 @@ test('Module note and work drafts remain available inside the compact panels', (
   for (const text of ['Мій збережений конспект', 'Чернетка практичної роботи', 'Особиста нотатка до теми']) assert.match(markup, new RegExp(text));
   assert.match(markup, /data-module-panel="notes"/);
   assert.match(markup, /href="#review\?module=3"/);
-  assert.equal([...markup.matchAll(/aria-label="Модуль \d+:/g)].length, 12);
+  assert.equal([...markup.matchAll(/aria-label="Модуль \d+:/g)].length, 0);
+  assert.match(markup, /href="#modules"/);
+  assert.match(markup, /href="#study\?material=/);
 });
 
 test('Backup round-trips review schedules, deleted cards, reflections and reading positions', () => {

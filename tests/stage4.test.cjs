@@ -255,6 +255,10 @@ test('Initial library and module markup makes no image or iframe requests', () =
   assert.doesNotMatch(h.nodes.get('main').innerHTML, /<(?:iframe|img)\b[^>]*\bsrc=/);
   h.context.location.hash = '#m1'; h.api.render();
   assert.doesNotMatch(h.nodes.get('main').innerHTML, /<(?:iframe|img)\b[^>]*\bsrc=/);
+  assert.doesNotMatch(h.nodes.get('main').innerHTML, /data-a="youtube-load"/);
+  const video=h.api.allResources().find(r=>r.module===1&&h.api.youtubeInfo(r.url));
+  h.context.location.hash=h.api.studyHref(video);h.api.renderPageNavigation();
+  assert.doesNotMatch(h.nodes.get('main').innerHTML, /<(?:iframe|img)\b[^>]*\bsrc=/);
   assert.match(h.nodes.get('main').innerHTML, /data-a="youtube-load"/);
 });
 
@@ -280,12 +284,13 @@ test('Offline video clicks leave the local notes and preview usable without crea
 test('Continue can reopen an unattached inbox material without a nonexistent module zero', () => {
   const h = setup(), r = add(h); h.api.rememberResource(r.id);
   const target = h.api.resumeTarget(); assert.equal(target.module, 0);
-  const link = h.api.resumeHref(target); assert.equal(link, '#library?material=' + r.id);
+  const link = h.api.resumeHref(target); assert.equal(link, '#study?material=' + r.id);
   h.context.location.hash = '#overview'; h.api.render();
   assert.match(h.nodes.get('main').innerHTML, /Матеріал із бібліотеки/);
   h.context.location.hash = link;
   for (const fn of h.windowEvents.hashchange) fn({});
-  assert.equal(h.context.document.activeElement.dataset.resource, r.id);
+  assert.equal(h.api.studyCurrent().id, r.id);
+  assert.match(h.nodes.get('main').innerHTML, /class="page study-page"/);
 });
 
 test('The single backup file round-trips the catalog, trash, tags, notes and legacy archives', () => {
