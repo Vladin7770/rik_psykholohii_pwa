@@ -1,0 +1,19 @@
+{
+  "name": "rik-psykholohii-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Україномовна навчальна PWA з локальними даними та Supabase Auth",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node tests/learning-tools.test.cjs && node --test tests/auth.test.mjs tests/build.test.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.119.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

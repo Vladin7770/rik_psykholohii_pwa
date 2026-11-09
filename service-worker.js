@@ -1,9 +1,9 @@
 // Change BUILD whenever an app-shell file changes.
-const BUILD = '2026-11-09-learning-1';
+const BUILD = '2026-11-09-auth-1';
 const SCOPE = new URL(self.registration.scope);
 const PREFIX = 'rik-psykholohii:' + encodeURIComponent(SCOPE.pathname) + ':shell-';
 const CACHE_NAME = PREFIX + BUILD;
-const SHELL = ['index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png']
+const SHELL = ['index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'runtime-config.js', 'auth.js']
   .map(path => new URL(path, SCOPE).href);
 
 self.addEventListener('install', event => {

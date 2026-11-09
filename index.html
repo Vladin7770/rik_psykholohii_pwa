@@ -8,6 +8,8 @@
 <link rel="manifest" id="app-manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon-192.png?v=psychology-1" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="./icon-192.png?v=psychology-1">
+<script defer src="./runtime-config.js"></script>
+<script defer src="./auth.js"></script>
 <script id="theme-boot">try{var t=JSON.parse(localStorage.getItem("psykholohiia-rik-v1")||"{}").theme;if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 <style>
 /* Макет: ліва навігація зі списком модулів і колонка для читання; на «Огляді» в центрі годинник року з 12 секторів, що заповнюються від центру. */
@@ -775,6 +777,14 @@ dialog[open]::backdrop{animation:backdrop-in 220ms var(--ease-soft) both;}
 .reading-enabled.nav-open .side{display:block;position:fixed;inset:0 auto 0 0;width:min(340px,90vw);max-height:100dvh;z-index:50;background:var(--bg);padding:24px;box-shadow:0 0 0 100vmax #0008}
 .reading-enabled.nav-open .close-btn{display:block}
 .reading-enabled.nav-open{overflow:hidden}
+.auth-account{display:grid;gap:8px;padding:16px 10px;border-top:1px solid var(--line);margin-top:16px;overflow-wrap:anywhere}
+#auth-dialog{width:min(460px,calc(100vw - 28px));max-height:calc(100dvh - 32px);overflow:auto;padding:24px;border:1px solid var(--line-strong);border-radius:18px;background:var(--surface);color:var(--ink)}
+#auth-dialog::backdrop{background:#0008}#auth-dialog h2{font-size:1.35rem}
+#auth-dialog label{display:grid;gap:6px;margin-top:18px}#auth-dialog .row{margin-top:18px}
+#auth-dialog .auth-message{margin-top:16px;overflow-wrap:anywhere}
+#auth-error:empty{display:none}#auth-error{color:var(--danger)}
+#auth-profile{margin-top:20px}#auth-user-email{overflow-wrap:anywhere}
+#auth-dialog .btn{min-height:44px}#auth-dialog form .btn{flex:1}
 .reading-enabled .module-page{max-width:min(100%,var(--reading-width,70ch));margin-inline:auto;font-size:var(--reading-size,18px);line-height:var(--reading-line,1.7)}
 .reading-enabled .module-page .learn-prose{line-height:inherit}
 .reading-enabled .module-page .ta{font-size:1rem}.reading-enabled .module-switcher{position:static}
@@ -788,7 +798,7 @@ dialog[open]::backdrop{animation:backdrop-in 220ms var(--ease-soft) both;}
 <div class="shell" id="shell">
   <header class="topbar">
     <a class="t" href="#overview">Рік психології</a>
-    <span class="row"><a class="pill" href="#week" hidden></a><button class="menu-btn" type="button" data-a="cmd-open" aria-label="Відкрити швидкий пошук">Пошук</button><button class="menu-btn" type="button" data-a="menu" aria-label="Відкрити меню" aria-expanded="false" aria-controls="side">Меню</button></span>
+    <span class="row"><a class="pill" href="#week" hidden></a><button class="menu-btn" type="button" data-auth-open aria-haspopup="dialog" aria-controls="auth-dialog">Увійти</button><button class="menu-btn" type="button" data-a="cmd-open" aria-label="Відкрити швидкий пошук">Пошук</button><button class="menu-btn" type="button" data-a="menu" aria-label="Відкрити меню" aria-expanded="false" aria-controls="side">Меню</button></span>
   </header>
   <aside class="side" id="side"></aside>
   <main class="main" id="main" tabindex="-1"></main>
@@ -798,6 +808,24 @@ dialog[open]::backdrop{animation:backdrop-in 220ms var(--ease-soft) both;}
 <dialog id="attach-dialog" aria-labelledby="attach-title"></dialog>
 <dialog id="card-dialog" aria-labelledby="card-dialog-title"></dialog>
 <dialog id="recall-dialog" aria-labelledby="recall-dialog-title"></dialog>
+<dialog id="auth-dialog" aria-labelledby="auth-title" aria-describedby="auth-status">
+  <div class="row" style="justify-content:space-between;margin-top:0"><h2 id="auth-title">Акаунт</h2><button class="btn small" id="auth-close" type="button" data-auth-close>Закрити</button></div>
+  <p class="hint auth-message" id="auth-status" role="status" aria-live="polite">Локальне навчання доступне без входу.</p>
+  <p class="auth-message" id="auth-error" role="alert"></p>
+  <form id="auth-form">
+    <label for="auth-email">Email<input class="inp" id="auth-email" name="email" type="email" required autocomplete="username" inputmode="email" maxlength="254" autocapitalize="none" spellcheck="false"></label>
+    <label for="auth-password">Пароль<input class="inp" id="auth-password" name="password" type="password" required autocomplete="current-password" maxlength="256" aria-describedby="auth-password-hint"></label>
+    <p class="hint" id="auth-password-hint">Для реєстрації — щонайменше 6 символів. Вимоги проєкту можуть бути суворішими.</p>
+    <div class="row"><button class="btn primary" type="submit" name="intent" value="signin">Увійти</button><button class="btn" type="submit" name="intent" value="signup">Зареєструватися</button></div>
+    <div class="row"><button class="btn" type="button" data-auth-google>Вхід через Google</button></div>
+  </form>
+  <section id="auth-profile" hidden aria-label="Профіль користувача">
+    <p><b id="auth-user-email"></b></p><p class="hint" id="auth-session-label"></p>
+    <p class="note" id="auth-offline-note" hidden>Це збережений профіль. Без зв’язку із Supabase чинність сесії не підтверджена; локальне навчання доступне. Якщо кнопка виходу недоступна, підключись до інтернету.</p>
+    <div class="row"><button class="btn" id="auth-signout" type="button" data-auth-signout>Вийти з акаунту</button></div>
+  </section>
+  <p class="hint auth-message">Навчальні записи зберігаються на цьому пристрої. Вхід не переносить їх у хмару й не розділяє між акаунтами.</p>
+</dialog>
 <dialog id="matdlg"></dialog><dialog id="command-dialog" aria-label="Швидкий пошук"></dialog><div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1244,9 +1272,10 @@ function renderNav(){
   h+='<div class="nav-label">Прогрес</div><nav class="nav">'+L('analytics','Аналітика')+L('achievements','XP та досягнення')+'</nav>';
   h+='<div class="nav-label">Практика</div><nav class="nav">'+L('research','Наукові дослідження')+L('glossary','Словник')+L('cards','Картки')+L('cases','Випадки')+L('feynman','Режим Фейнмана')+L('experiments','Експерименти')+L('critical','Критичне мислення')+L('concepts','Карта понять')+'</nav><div class="nav-label">Мої записи</div><nav class="nav">'+L('ideas','Вхідні ідеї')+L('journal','Щоденник')+'</nav></details>';
   h+='<div class="nav-label">Дані</div><nav class="nav">'+L('backup','Резервна копія')+L('guide','Правила та шаблони')+'</nav>';
+  h+='<div class="auth-account" data-auth-account><button class="btn small" type="button" data-auth-open aria-haspopup="dialog" aria-controls="auth-dialog">Увійти / Реєстрація</button></div>';
   h+=themeSettingHTML('nav-theme');
   h+='<a class="pill" href="#week" hidden></a><p class="sync" data-s="'+sync+'">'+esc(syncText())+'</p>';
-  $('#side').innerHTML=h;updatePill();
+  $('#side').innerHTML=h;updatePill();if(window.RikAuth)window.RikAuth.render();
 }
 function moduleSwitcherHTML(current){return '<nav class="module-switcher" aria-label="Швидке перемикання модулів">'+MODS.map(function(m,i){var n=i+1;return '<a href="#m'+n+'" aria-label="Модуль '+n+': '+esc(m.title)+'"'+(n===current?' aria-current="page"':'')+'>'+pad(n)+'</a>'}).join('')+'</nav>'}
 function vModules(){var completed=doneCount(),next=nextModule();var h='<div class="page"><p class="eyebrow">Навчання у власному темпі</p><h1>Модулі</h1><p class="lead">Обери тему, до якої хочеш повернутися. Завершено '+completed+' з 12 модулів.</p><div class="row" style="margin-top:18px"><a class="btn" href="#review">Повторення · '+dueCards().length+'</a><a class="btn" href="#cards">Додати картку</a></div><nav class="module-list" aria-label="12 модулів програми">';
@@ -1841,7 +1870,7 @@ var CMD_ITEMS=[],CMD_SELECTED=0,CMD_PENDING_GLOSSARY='',CMD_FOCUS_AFTER_RENDER='
 function downloadTextFile(name,content,type){try{var blob=new Blob([content],{type:type||'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},1200);toast('Файл «'+name+'» підготовлено')}catch(e){toast('Не вдалося підготувати файл')}}
 function pwaNoticeHTML(){return '<aside class="pwa-notice" id="pwa-notice" role="status"'+(PWA_REG&&PWA_REG.waiting&&!PWA_DISMISSED?'':' hidden')+'><p>Доступна нова версія. Онови, коли завершиш поточну дію.</p><div class="row"><button class="btn primary" type="button" data-a="pwa-update">Оновити</button><button class="btn" type="button" data-a="pwa-later">Пізніше</button></div></aside>'}
 function refreshPWAStatus(){var el=$('#pwa-status');if(el)el.textContent=PWA_STATUS||'Перевіряю автономний режим…';var notice=$('#pwa-notice');if(notice)notice.hidden=!(PWA_REG&&PWA_REG.waiting&&!PWA_DISMISSED);document.querySelectorAll('[data-a="pwa-install"]').forEach(function(b){b.hidden=!PWA_INSTALL});document.querySelectorAll('[data-a="pwa-update"]').forEach(function(b){b.hidden=!(PWA_REG&&PWA_REG.waiting)})}
-function hasUnsavedDraft(){if(document.querySelector('input[name^="qa-"]:checked'))return true;return Array.from(document.querySelectorAll('form input,form textarea,form select')).some(function(el){if(el.disabled||(el.closest&&el.closest('dialog:not([open])'))||el.dataset.bind||el.dataset.toolField||['hidden','submit','button','file'].indexOf(el.type)>-1)return false;if(el.tagName==='SELECT'){var opts=Array.from(el.options),index=-1;opts.forEach(function(o,i){if(o.defaultSelected)index=i});if(index===-1)index=opts.findIndex(function(o){return !o.disabled});return el.selectedIndex!==index}if(el.type==='checkbox'||el.type==='radio')return el.checked!==el.defaultChecked;return el.value!==el.defaultValue})}
+function hasUnsavedDraft(skipAuth){if(document.querySelector('input[name^="qa-"]:checked'))return true;return Array.from(document.querySelectorAll('form input,form textarea,form select')).some(function(el){if(el.disabled||(skipAuth&&el.closest&&el.closest('#auth-dialog'))||(el.closest&&el.closest('dialog:not([open])'))||el.dataset.bind||el.dataset.toolField||['hidden','submit','button','file'].indexOf(el.type)>-1)return false;if(el.tagName==='SELECT'){var opts=Array.from(el.options),index=-1;opts.forEach(function(o,i){if(o.defaultSelected)index=i});if(index===-1)index=opts.findIndex(function(o){return !o.disabled});return el.selectedIndex!==index}if(el.type==='checkbox'||el.type==='radio')return el.checked!==el.defaultChecked;return el.value!==el.defaultValue})}
 function applyPWAUpdate(){if(!PWA_REG||!PWA_REG.waiting)return false;if(hasUnsavedDraft()){toast('Спершу збережи або закрий заповнену форму');return false}captureReadingView(READING_MODULE);if(!saveLocal()){toast('Спершу збережи резервну копію: оновлення зачекає');return false}PWA_UPDATING=true;PWA_REG.waiting.postMessage({type:'APPLY_UPDATE'});return true}
 function initPWA(){
  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();PWA_INSTALL=e;refreshPWAStatus()});
@@ -1911,6 +1940,7 @@ document.addEventListener('visibilitychange',function(){if(document.visibilitySt
 window.addEventListener('resize',function(){syncModuleHeader();if(window.matchMedia('(min-width:901px)').matches&&document.body.classList.contains('nav-open'))setMenu(false)});
 
 document.addEventListener('keydown',function(e){
+  if($('#auth-dialog')&&$('#auth-dialog').open)return;
   var command=$('#command-dialog');
   if((e.metaKey||e.ctrlKey)&&String(e.key).toLowerCase()==='k'){e.preventDefault();if(command&&command.open)closeCommand();else{setMenu(false);openCommand()}return}
   if(command&&command.open){
@@ -1924,7 +1954,7 @@ document.addEventListener('keydown',function(e){
     if(e.key==='Tab'){var controls=Array.prototype.filter.call($('#side').querySelectorAll('a[href],button,summary,input,select,textarea'),function(el){return !el.disabled&&el.getClientRects().length}),first=controls[0],last=controls[controls.length-1];if(first&&((e.shiftKey&&document.activeElement===first)||(!e.shiftKey&&document.activeElement===last))){e.preventDefault();(e.shiftKey?last:first).focus()}}
     return;
   }
-  if(($('#matdlg')&&$('#matdlg').open)||($('#goal-dialog')&&$('#goal-dialog').open)||($('#attach-dialog')&&$('#attach-dialog').open)||($('#card-dialog')&&$('#card-dialog').open)||($('#recall-dialog')&&$('#recall-dialog').open))return;
+  if(($('#matdlg')&&$('#matdlg').open)||($('#goal-dialog')&&$('#goal-dialog').open)||($('#attach-dialog')&&$('#attach-dialog').open)||($('#card-dialog')&&$('#card-dialog').open)||($('#recall-dialog')&&$('#recall-dialog').open)||($('#auth-dialog')&&$('#auth-dialog').open))return;
   var target=e.target,tag=(target&&target.tagName||'').toLowerCase();
   if(tag==='input'||tag==='textarea'||tag==='select'||(target&&target.isContentEditable))return;
   var r=route();
@@ -2320,6 +2350,8 @@ document.addEventListener('keydown',function(e){if(e.repeat||e.metaKey||e.ctrlKe
 document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')pauseExperiment()});
 
 function commandMatches(q){return baseCommandMatches('').concat(learningCommandItems()).map(function(x,i){return {item:x,rank:searchRank(x,q),index:i}}).filter(function(x){return x.rank>0}).sort(function(a,b){return b.rank-a.rank||a.index-b.index}).slice(0,80).map(function(x){return x.item})}
+
+window.RikStudy={closeMenu:function(){setMenu(false)},prepareAuthRedirect:function(){if(hasUnsavedDraft(true)){toast('Перед входом через Google збережи або закрий інші заповнені форми');return false}captureReadingView(READING_MODULE);var saved=saveLocal();if(!saved)toast('Не вдалося зберегти навчальні дані. Перед входом завантаж резервну копію.');return saved}};
 
 try{if(window.history&&'scrollRestoration' in window.history)window.history.scrollRestoration='manual'}catch(e){}
 applyTheme();
