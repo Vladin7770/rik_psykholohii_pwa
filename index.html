@@ -813,6 +813,7 @@ dialog[open]::backdrop{animation:backdrop-in 220ms var(--ease-soft) both;}
 @media(max-width:1100px){.ac-modules{grid-template-columns:1fr}.ac-layout{grid-template-columns:1fr}.ac-plan{position:static;max-height:none}.ac-plan nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:420px){.ac-question{padding:12px}.ac-plan nav a{padding:8px}.ac-tools .btn{white-space:normal;text-align:left}.ac-stage-footer .btn{width:100%;text-align:center}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ac-page *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.ac-video{margin:18px 0;font-size:1rem}.ac-video h4,.ac-review-unit h4{margin:22px 0 12px}.ac-review-unit{margin:18px 0}.ac-review-unit details{margin:14px 0}
 </style>
 </head><body>
 <a class="skip-link" href="#main" data-a="skip-main">Перейти до вмісту</a>
@@ -1107,7 +1108,7 @@ function validateState(s){
   Object.keys(s.moduleViews||{}).forEach(function(k){var view=s.moduleViews[k];if(!/^(?:[1-9]|1[0-2])$/.test(k)||!isRecord(view)||!Number.isFinite(view.scrollY)||view.scrollY<0||(view.anchor!==undefined&&typeof view.anchor!=='string')||(view.offset!==undefined&&!Number.isFinite(view.offset))||!Array.isArray(view.panels)||view.panels.some(function(x){return typeof x!=='string'})||!Array.isArray(view.resources)||view.resources.some(function(x){return typeof x!=='string'}))throw new Error('moduleViews')});
   (s.cards||[]).forEach(function(c){if(c.reviewStep!==undefined&&(!Number.isInteger(c.reviewStep)||c.reviewStep< -1||c.reviewStep>4))throw new Error('reviewStep');if(c.resourceId!==undefined&&typeof c.resourceId!=='string')throw new Error('cardResource')});
   Object.keys(s.resourceStates||{}).forEach(function(id){if(s.resourceStates[id].recall!==undefined&&typeof s.resourceStates[id].recall!=='string')throw new Error('recall')});
-  ['ideas','journal','feynman','research','concepts','cards','events'].forEach(function(k){(s[k]||[]).forEach(function(x){if(x.academicLessonId!==undefined&&typeof x.academicLessonId!=='string')throw new Error('academicLessonId')})});
+  ['ideas','journal','feynman','research','concepts','cards','events'].forEach(function(k){(s[k]||[]).forEach(function(x){if(x.academicLessonId!==undefined&&typeof x.academicLessonId!=='string')throw new Error('academicLessonId');if(x.academicUnitId!==undefined&&typeof x.academicUnitId!=='string')throw new Error('academicUnitId')})});
   validateLearningState(s);
   window.RikAcademicCore.validateState(s.academic);
   return s;
@@ -2135,7 +2136,7 @@ document.addEventListener('input',function(e){
 });
 document.addEventListener('submit',function(e){
   var form=e.target;
-  if(form.id==='study-card-form'){e.preventDefault();var cardData=new FormData(form);try{var createdCard=createStudyCard(cardData.get('front'),cardData.get('back'),cardData.get('module'),form.dataset.resourceId||'');if(form.dataset.academicLesson)mutate(function(s){createdCard.academicLessonId=form.dataset.academicLesson},false,false,true);$('#card-dialog').close();if(route()==='cards')$('#cards-list').innerHTML=cardListHTML();else if(route()==='review')render();toast('Картку створено. Перше повторення вже доступне.')}catch(error){toast(error.message)}return}
+  if(form.id==='study-card-form'){e.preventDefault();var cardData=new FormData(form);try{var createdCard=createStudyCard(cardData.get('front'),cardData.get('back'),cardData.get('module'),form.dataset.resourceId||'');if(form.dataset.academicLesson)mutate(function(s){createdCard.academicLessonId=form.dataset.academicLesson;if(form.dataset.academicUnit)createdCard.academicUnitId=form.dataset.academicUnit},false,false,true);$('#card-dialog').close();if(route()==='cards')$('#cards-list').innerHTML=cardListHTML();else if(route()==='review')render();toast('Картку створено. Перше повторення вже доступне.')}catch(error){toast(error.message)}return}
   if(form.id==='matform'||form.id==='library-quick-add'){e.preventDefault();handleLibrarySubmit(form);return}
   if(form.id==='daily-goal-form'){e.preventDefault();var goalData=new FormData(form),unit=String(goalData.get('unit')),amount=Number(goalData.get('target'));if(!setDailyGoal(unit,amount)){toast('Обери цілу кількість від 1 до '+(unit==='steps'?100:180));return}$('#goal-dialog').close();render();var change=$('#goal-change');if(change)change.focus();return}
 

@@ -5,15 +5,15 @@ const root=path.join(__dirname,'..'),KEY='psykholohiia-rik-v1',CID='rik-academic
 const plain=x=>JSON.parse(JSON.stringify(x));
 const fixture=()=>JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/legacy-v1-profile.json'),'utf8'));
 const ctx={window:{},URL};vm.createContext(ctx);for(const file of ['curriculum.js','academic-core.js'])vm.runInContext(fs.readFileSync(path.join(root,'content',file),'utf8'),ctx);
-const c=ctx.window.RikAcademicContent,k=ctx.window.RikAcademicCore,l=c.lessons.find(x=>x.id===ID),pilots=c.lessons.filter(x=>x.publicationStatus==='pilot');
+const c=ctx.window.RikAcademicContent,k=ctx.window.RikAcademicCore,l=c.lessons.find(x=>x.id===ID),pilots=c.lessons.filter(x=>x.publicationStatus!=='planned');
 function setup(hash='#academic?lesson='+ID){return harness(JSON.stringify(fixture()),{hash,now:1794218400000})}
 function rec(h,id=ID){return h.api.state.academic.curricula[CID]?.lessons[id]||{}}
 function nav(h,hash){h.context.location.hash=hash;h.api.renderPageNavigation()}
 function event(h,type,target){for(const fn of h.documentEvents[type]||[])fn({target,preventDefault(){}})}
 function answerAll(h,correct=true){for(const q of l.assessments)h.api.academic.choose(ID,q.id,correct?q.answerKey:(q.answerKey+1)%q.choices.length);return h.api.academic.action('assess',{})}
 
-test('Canonical curriculum has 12 modules, 99 semantic lesson IDs and exactly three pilot texts',()=>{
- assert.equal(k.validateContent(c),c);assert.equal(c.modules.length,12);assert.equal(c.lessons.length,99);assert.equal(pilots.length,3);
+test('Canonical curriculum has 12 modules, 99 semantic lesson IDs and twelve authored texts',()=>{
+ assert.equal(k.validateContent(c),c);assert.equal(c.modules.length,12);assert.equal(c.lessons.length,99);assert.equal(pilots.length,12);
  assert.ok(c.lessons.every(x=>!/^m\d/.test(x.id)));assert.ok(pilots.every(x=>x.editorialStatus==='scientific_review_needed'));
  for(const p of pilots){const prose=p.sections.flatMap(x=>x.paragraphs).join(' ');assert.ok(prose.split(/\s+/).length>500);assert.ok(prose.length>4500);assert.equal(p.editorialChecklist.independent_subject_review,false)}
 });
@@ -164,4 +164,108 @@ test('Every pilot stage and feedback state has balanced HTML, unique IDs and acc
 
 test('Existing cases and library expose the academic content without remapping old records',()=>{
  const h=setup();assert.match(h.api.vCases(),/academic\?lesson=ay1-psychoanalysis-intro&stage=case/);assert.match(h.api.vLibrary(),/academic\?sources=1/);assert.deepEqual(plain(h.api.state.caseNotes),fixture().caseNotes);
+});
+
+// Module 1 expansion: content contracts, compatibility with prior two-question
+// editions, optional video work and explicit creation of existing study cards.
+const foundations=c.lessons.filter(x=>x.moduleId==='ac-foundations');
+test('Module 1 contains ten authored lessons, with 50 immediate items, 10 transfer items and 40 review units',()=>{
+ assert.equal(foundations.length,10);assert.ok(foundations.every(x=>x.publicationStatus==='published'));
+ assert.equal(foundations.reduce((n,x)=>n+x.assessments.length,0),50);
+ assert.equal(foundations.filter(x=>x.review.question).length,10);
+ assert.equal(foundations.reduce((n,x)=>n+x.reviewUnits.length,0),40);
+ assert.equal(c.lessons.filter(x=>x.publicationStatus==='planned').length,87);
+});
+for(const lesson of foundations)test('Module 1 academic structure and objective coverage: '+lesson.id,()=>{
+ assert.ok(lesson.sections.length>=8);assert.ok(lesson.sections.flatMap(x=>x.paragraphs).join(' ').split(/\s+/).length>=700);
+ assert.ok(lesson.perspectiveComparisons.length>=2);assert.ok(lesson.evidenceNotes.length>=2);
+ assert.ok(lesson.caseStudy.prompts.length>=3);assert.ok(lesson.openAssessment.rubric.length>=3);
+ assert.ok(lesson.reviewUnits.filter(x=>x.kind!=='definition').length>=2);
+ for(const o of lesson.objectives)assert.ok(lesson.assessments.concat([lesson.review.question]).some(q=>q.objectiveIds.includes(o.id)),o.id);
+ assert.equal(lesson.editorialChecklist.independent_subject_review,false);
+ assert.equal(lesson.completionStatus,'needs_academic_review');
+});
+test('Other 89 lessons retain their pre-module-1 contents',()=>{
+ const crypto=require('node:crypto'),hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
+ const baseline=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/academic-outside-module1-hashes.json'),'utf8'));
+ for(const x of c.lessons.filter(x=>x.moduleId!=='ac-foundations'))assert.equal(hash(plain(x)),baseline[x.id],x.id);
+});
+test('Eleven concrete videos have ten main and one additional Ukrainian guide; playback remains unverified',()=>{
+ assert.equal(c.videos.length,11);assert.equal(foundations.flatMap(x=>x.videoGuides).filter(x=>x.role==='main').length,10);
+ assert.equal(foundations.flatMap(x=>x.videoGuides).filter(x=>x.role==='additional').length,1);
+ for(const v of c.videos){assert.equal(v.playbackStatus,'not_tested');assert.equal(v.language,'en');assert.doesNotMatch(v.url,/results|search_query|playlist/)}
+ for(const g of foundations.flatMap(x=>x.videoGuides)){assert.equal(g.required,false);assert.equal(g.questionsUk.length,3);assert.ok(g.keyIdeasUk.length>=3);assert.ok(/[іїєґ]/i.test(g.whyUk))}
+});
+for(const [name,change] of [
+ ['video search URL',x=>x.videos[0].url='https://www.youtube.com/results?search_query=psychology'],
+ ['video playlist',x=>x.videos[0].url+='&list=PL123'],
+ ['unidentified video',x=>x.videos[0].author=''],
+ ['unverified video text',x=>x.videos[0].verificationStatus='candidate'],
+ ['missing duration',x=>x.videos[0].durationSeconds=0],
+ ['orphan video guide',x=>x.lessons[0].videoGuides[0].videoId='missing'],
+ ['required online video',x=>x.lessons[0].videoGuides[0].required=true],
+ ['empty active viewing',x=>x.lessons[0].videoGuides[0].questionsUk=[]],
+ ['missing main video',x=>x.lessons[0].videoGuides=[]],
+ ['duplicate review unit',x=>x.lessons[1].reviewUnits[0].id=x.lessons[0].reviewUnits[0].id],
+ ['dictionary-only review',x=>x.lessons[0].reviewUnits.forEach(u=>u.kind='definition')],
+ ['unknown review source',x=>x.lessons[0].reviewUnits[0].sourceIds=['missing']],
+ ['uncovered objective',x=>x.lessons[0].objectives.push({id:'module-one-uncovered',text:'Нова ціль'})]
+])test('Module 1 publication gate rejects '+name,()=>{const bad=plain(c);change(bad);assert.throws(()=>k.validateContent(bad))});
+test('All ten video guides and review unit panels render without external players or automatic card seeding',()=>{
+ const h=setup(),cards=plain(h.api.state.cards);
+ for(const lesson of foundations){nav(h,'#academic?lesson='+lesson.id+'&stage=theory');const html=h.nodes.get('main').innerHTML;
+  assert.match(html,/Відеосупровід українською/);assert.match(html,/Питання для активного перегляду/);assert.doesNotMatch(html,/<iframe|<video/);
+  nav(h,'#academic?lesson='+lesson.id+'&stage=retention');assert.equal((h.nodes.get('main').innerHTML.match(/data-ac-action="unit-card"/g)||[]).length,4)}
+ assert.deepEqual(plain(h.api.state.cards),cards);
+});
+test('Optional video answers debounce, export, escape and reload independently of viewing or stage completion',()=>{
+ const h=setup(),key='video-'+l.videoGuides[0].videoId;
+ assert.equal(h.api.academic.write(ID,key,'Моя відповідь <img onerror=x>'),true);
+ assert.equal(h.api.academic.write(ID,'video-missing','Зайве'),false);
+ const backup=h.api.createBackup();assert.equal(backup.state.academic.curricula[CID].lessons[ID].drafts[key],'Моя відповідь <img onerror=x>');
+ const re=harness(JSON.stringify(backup.state),{hash:'#academic?lesson='+ID});assert.match(re.nodes.get('main').innerHTML,/&lt;img onerror=x&gt;/);
+ const empty=setup();empty.api.academic.write(ID,'opening','Моя гіпотеза');assert.equal(empty.api.academic.action('complete',{}),true);assert.equal(rec(empty).drafts[key],undefined);
+});
+test('Review units prepare editable cards and persist their links only on explicit form submission',()=>{
+ const h=setup('#academic?lesson='+ID+'&stage=retention'),unit=l.reviewUnits[1],old=plain(h.api.state.cards);
+ assert.equal(h.api.academic.action('unit-card',{unit:'missing'}),false);
+ assert.equal(h.api.academic.action('unit-card',{unit:unit.id}),true);assert.deepEqual(plain(h.api.state.cards),old);
+ assert.equal(h.nodes.get('card-front').value,unit.promptUk.slice(0,300));assert.equal(h.nodes.get('card-back').value,unit.answerUk.slice(0,2000));
+ const form=h.nodes.get('study-card-form');form.formValues={front:'Моє уточнене питання',back:unit.answerUk,module:'0'};
+ event(h,'submit',form);const card=h.api.state.cards.find(x=>x.academicUnitId===unit.id);
+ assert.ok(card);assert.equal(card.academicLessonId,ID);assert.equal(card.module,0);assert.equal(card.front,'Моє уточнене питання');
+ for(const x of old)assert.deepEqual(plain(h.api.state.cards.find(y=>y.id===x.id)),x);
+ const decoded=h.api.decodeBackup(JSON.stringify(h.api.createBackup()));assert.equal(decoded.cards.find(x=>x.id===card.id).academicUnitId,unit.id);
+ assert.equal(h.api.academic.action('unit-card',{unit:unit.id}),true);assert.equal(h.api.state.cards.length,old.length+1);assert.equal(h.context.location.hash,'#cards?entry='+card.id);
+});
+function oldEditionProfile(){const s=fixture(),at=1794218400000-10*k.DAY;
+ s.academic={schemaVersion:1,future:{keep:true},curricula:{[CID]:{lessons:{[ID]:{stage:'assessment',drafts:{open:'Моя стара аргументація',notes:'Старий конспект',review:'Старе пригадування'},choices:{'method-q1':0,'method-q2':1},stageDone:{theory:true},stageScroll:{theory:320},attempts:[{kind:'assessment',at,correct:true,answers:{'method-q1':0,'method-q2':1},contentVersion:'1.0.0'},{kind:'review',at:at+2*k.DAY,correct:true,answers:{'method-review':0},selfRating:'good',contentVersion:'1.0.0'}],demonstratedAt:at,retainedAt:at+2*k.DAY,reviewDueAt:at+6*k.DAY,reviewIntervalDays:4,future:{keep:'old'}}},lastLessonId:ID}}};return s}
+test('Old successful two-item edition retains all history and notes without claiming the expanded assessment was passed',()=>{
+ const s=oldEditionProfile(),old=s.academic.curricula[CID].lessons[ID],h=harness(JSON.stringify(s),{hash:'#academic?lesson='+ID+'&stage=assessment',now:1794218400000});
+ assert.deepEqual(plain(rec(h).attempts),old.attempts);assert.deepEqual(plain(rec(h).drafts),old.drafts);assert.equal(k.evidence(l,rec(h)).demonstratedAt,0);
+ assert.equal(k.status(rec(h),l),'attempted');assert.equal(h.api.academic.action('complete',{}),false);
+ nav(h,'#academic?lesson='+ID+'&stage=retention');assert.doesNotMatch(h.nodes.get('main').innerHTML,/data-ac-action="review"/);assert.equal(h.api.academic.action('complete',{}),false);
+ assert.equal(h.api.academic.action('review',{rating:'good'}),false);assert.deepEqual(plain(rec(h).future),old.future);
+ assert.deepEqual(plain(h.api.createBackup().state.academic.future),s.academic.future);
+});
+test('New edition pass starts its own two-day review while preserving old timestamps, cards and attempts',()=>{
+ const s=oldEditionProfile(),old=plain(s.academic.curricula[CID].lessons[ID]),h=harness(JSON.stringify(s),{hash:'#academic?lesson='+ID+'&stage=assessment',now:1794218400000});
+ answerAll(h);assert.equal(k.evidence(l,rec(h)).demonstratedAt,h.clock.now);assert.equal(k.evidence(l,rec(h)).retainedAt,0);
+ assert.equal(rec(h).demonstratedAt,old.demonstratedAt);assert.equal(rec(h).retainedAt,old.retainedAt);assert.equal(rec(h).reviewDueAt,h.clock.now+2*k.DAY);
+ assert.deepEqual(plain(rec(h).attempts.slice(0,2)),old.attempts);assert.deepEqual(plain(h.api.state.cards),s.cards);
+ h.api.academic.write(ID,'review','Новий самостійний висновок');h.api.academic.choose(ID,l.review.question.id,l.review.question.answerKey);
+ assert.equal(h.api.academic.action('review',{rating:'easy'}),false);h.clock.now+=2*k.DAY;
+ assert.equal(h.api.academic.action('review',{rating:'good'}),true);assert.equal(k.status(rec(h),l),'retained');assert.equal(rec(h).attempts.length,4);
+});
+test('Imported review without a current pass or before two days does not count as retained evidence',()=>{
+ const r=plain(oldEditionProfile().academic.curricula[CID].lessons[ID]);r.attempts=[{kind:'review',at:1794218400000,correct:true,selfRating:'good',contentVersion:l.version,answers:{}}];
+ assert.equal(k.evidence(l,r).retainedAt,0);r.attempts.unshift({kind:'assessment',at:1794218400000-k.DAY,correct:true,contentVersion:l.version,answers:{}});assert.equal(k.evidence(l,r).retainedAt,0);
+});
+test('Malformed attempt version and card unit metadata are rejected without changing storage',()=>{
+ const h=setup(),before=h.storage.get(KEY),bad=plain(h.api.state);bad.academic.curricula[CID].lessons[ID].attempts=[{kind:'assessment',at:1,correct:true,answers:{},contentVersion:{}}];
+ assert.throws(()=>h.api.decodeBackup(JSON.stringify(bad)));const badCard=plain(h.api.state);badCard.cards[0].academicUnitId={};assert.throws(()=>h.api.decodeBackup(JSON.stringify(badCard)));assert.equal(h.storage.get(KEY),before);
+});
+test('Search includes specific video metadata and newly authored lecture concepts',()=>{
+ const h=setup();assert.ok(h.api.commandMatches('Hank Green').some(x=>x.type==='Навчальне відео'));
+ assert.ok(h.api.commandMatches('відтворюваність').some(x=>x.target.includes('ay1-replication')));
 });

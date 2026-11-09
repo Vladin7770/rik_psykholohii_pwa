@@ -1,8 +1,8 @@
 # Реєстр джерел і журнал звірки
 
-Дата звірки: 9 листопада 2026. Існування, доступ, прочитаність і перевірка змісту відокремлені в канонічних метаданих. Вебперевірка виконана під час цього сеансу; вона не гарантує доступності URL у майбутньому. Сторінки видавців підтверджують лише видання, а не правильність усіх його положень.
+9 листопада 2026. Реєстр: 36 бібліографічних джерел. У Модулі 1 фактично використано 19; окремо наведено 11 відео. Канонічні записи відділяють існування, доступ, прочитаність і змістову звірку. Вебперевірка не гарантує майбутньої доступності URL.
 
-Повністю прочитаних книжок і незалежно науково рецензованих уроків у цьому результаті **немає**. Оригінальні українські тексти, приклади й оцінювання не є перекладом розділів джерел. Бібліографічні назви лишаються оригінальною мовою. Авторсько-правовий статус повних текстів не прирівнюється до дозволу на їх передрук. Легальні українські видання ще потрібно окремо перевірити.
+Повного читання книжок і незалежної наукової рецензії не заявлено. Джерела опрацьовані в зазначених нижче межах; каталог не є прочитаною книжкою, а історичне першоджерело — доказом сучасної правильності теорії. Український виклад, приклади, кейси й завдання авторські, без передруку розділів або транскриптів. Бібліографічні назви збережені оригінальною мовою.
 
 ## freud-lectures
 
@@ -15,7 +15,7 @@ Sigmund Freud. 1920. **A General Introduction to Psychoanalysis**. Boni and Live
 - Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
 - Англомовне видання, переклад G. Stanley Hall. Переглянуто лекції I–III, XIX та XXVII: задум методу, помилкові дії, опір і перенесення. Історичне свідчення, не сучасна перевірка ефективності.
 - Посилання і самостійний український виклад; текст джерела не передруковується.
-- Пов’язані уроки: ay1-facts-hypotheses, ay1-psychoanalysis-intro, ay1-vienna, ay1-topography, ay1-structural-model, ay1-repression, ay1-dreams, ay1-transference, ay1-psychosexual, ay1-late-freud.
+- Пов’язані уроки: ay1-facts-hypotheses, ay1-psychology-history, ay1-mental-processes, ay1-emotion-motivation, ay1-consciousness, ay1-research-design, ay1-measurement, ay1-argument, ay1-psychoanalysis-intro, ay1-vienna, ay1-topography, ay1-structural-model, ay1-repression, ay1-dreams, ay1-transference, ay1-psychosexual, ay1-late-freud.
 
 ## ipa-intro
 
@@ -54,7 +54,7 @@ Rose M. Spielman, William J. Jenkins, Marilyn D. Lovett. 2020. **Psychology 2e, 
 - Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
 - Переглянуто §2.1–2.3: спостереження, кореляція, експеримент, операціоналізація. Авторські приклади курсу не запозичені з підручника.
 - Посилання і самостійний український виклад; текст джерела не передруковується.
-- Пов’язані уроки: ay1-facts-hypotheses, ay1-psychology-history, ay1-mental-processes, ay1-emotion-motivation, ay1-consciousness, ay1-research-design, ay1-measurement, ay1-uncertainty, ay1-replication, ay1-argument, ay1-psychoanalysis-intro, ay1-anna-freud, ay1-defence-categories, ay1-affect-conflict, ay1-implicit-learning, ay1-control-prediction, ay1-two-unconscious, ay1-self-report, ay1-defence-evidence, ay1-lifespan, ay1-attachment, ay1-working-models, ay1-regulation, ay1-mentalization, ay1-identity-boundaries, ay1-childhood-causality, ay1-risk-prediction, ay1-experience-category, ay1-approaches, ay1-dynamic-trials, ay1-common-factors, ay1-trial-meta, ay1-guidelines, ay1-efficacy-truth, ay1-values, ay1-referral, ay1-levels, ay1-falsification, ay1-pluralism, ay1-literature-review, ay1-mental-states, ay1-unresolved, ay1-education-plan, ay1-capstone.
+- Пов’язані уроки: ay1-facts-hypotheses, ay1-psychology-history, ay1-mental-processes, ay1-emotion-motivation, ay1-consciousness, ay1-research-design, ay1-measurement, ay1-replication, ay1-argument, ay1-psychoanalysis-intro, ay1-anna-freud, ay1-defence-categories, ay1-affect-conflict, ay1-implicit-learning, ay1-control-prediction, ay1-two-unconscious, ay1-self-report, ay1-defence-evidence, ay1-lifespan, ay1-attachment, ay1-working-models, ay1-regulation, ay1-mentalization, ay1-identity-boundaries, ay1-childhood-causality, ay1-risk-prediction, ay1-experience-category, ay1-approaches, ay1-dynamic-trials, ay1-common-factors, ay1-trial-meta, ay1-guidelines, ay1-efficacy-truth, ay1-values, ay1-referral, ay1-levels, ay1-falsification, ay1-pluralism, ay1-literature-review, ay1-mental-states, ay1-unresolved, ay1-education-plan, ay1-capstone.
 
 ## noba-design
 
@@ -67,7 +67,7 @@ Christie Napa Scollon. Рік не уточнено. **Research Designs**. Noba 
 - Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
 - Переглянуто відмінності кореляційного, експериментального й поздовжнього дизайнів; числові приклади уроку повністю вигадані.
 - Посилання і самостійний український виклад; текст джерела не передруковується.
-- Пов’язані уроки: ay1-facts-hypotheses, ay1-psychology-history, ay1-mental-processes, ay1-emotion-motivation, ay1-consciousness, ay1-research-design, ay1-measurement, ay1-uncertainty, ay1-replication, ay1-argument.
+- Пов’язані уроки: ay1-facts-hypotheses, ay1-psychology-history, ay1-research-design, ay1-measurement, ay1-uncertainty, ay1-argument.
 
 ## os-freud
 
@@ -80,7 +80,7 @@ Rose M. Spielman, William J. Jenkins, Marilyn D. Lovett. 2020. **Psychology 2e, 
 - Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
 - Переглянуто історичні моделі й критику. Спрощення підручника (айсберг, універсальні стадії) не відтворюються як факти; для вузьких шкіл потрібні спеціалізовані праці.
 - Посилання і самостійний український виклад; текст джерела не передруковується.
-- Пов’язані уроки: ay1-psychoanalysis-intro, ay1-vienna, ay1-topography, ay1-structural-model, ay1-repression, ay1-dreams, ay1-transference, ay1-psychosexual, ay1-late-freud, ay1-jung, ay1-adler, ay1-lacan, ay1-relational, ay1-intersubjectivity, ay1-school-disputes, ay1-school-testability, ay1-social-comparison.
+- Пов’язані уроки: ay1-consciousness, ay1-psychoanalysis-intro, ay1-vienna, ay1-topography, ay1-structural-model, ay1-repression, ay1-dreams, ay1-transference, ay1-psychosexual, ay1-late-freud, ay1-jung, ay1-adler, ay1-lacan, ay1-relational, ay1-intersubjectivity, ay1-school-disputes, ay1-school-testability, ay1-social-comparison.
 
 ## os-clinical
 
@@ -158,7 +158,7 @@ John Dunlosky, Katherine A. Rawson, Elizabeth J. Marsh, Mitchell J. Nathan, Dani
 - Змістова звірка: `verification_pending`; дата: не підтверджена.
 - Доступ інструментом не отримано; не використано як перевірену основу уроків.
 - Лише бібліографічний кандидат.
-- Пов’язані уроки: ay1-psychology-history, ay1-mental-processes, ay1-emotion-motivation, ay1-consciousness, ay1-research-design, ay1-measurement, ay1-uncertainty, ay1-replication, ay1-argument.
+- Пов’язані уроки: ще не призначено.
 
 ## ipa-schools
 
@@ -266,7 +266,7 @@ Deborah L. Cabaniss, Sabrina Cherry, Carolyn J. Douglas, Anna R. Schwartz. 2016.
 
 ## cabaniss-initial-formulation
 
-Deborah L. Cabaniss, Sabrina Cherry, Carolyn J. Douglas, Anna Schwartz. 2016. **The Initial Formulation. In Psychodynamic Psychotherapy: A Clinical Manual, Second Edition**. Wiley
+Deborah L. Cabaniss, Sabrina Cherry, Carolyn J. Douglas, Anna Schwartz. 2016. **The Initial Formulation. In Psychodynamic Psychotherapy: A Clinical Manual, Second Edition**. Wiley DOI: 10.1002/9781119142010.ch5
 
 [Сторінка джерела](https://onlinelibrary.wiley.com/doi/10.1002/9781119142010.ch5)
 
@@ -277,9 +277,204 @@ Deborah L. Cabaniss, Sabrina Cherry, Carolyn J. Douglas, Anna Schwartz. 2016. **
 - Захищений текст; лише самостійне визначення й бібліографічне посилання.
 - Пов’язані уроки: ay1-experience-category.
 
-## Карта тверджень у пілотних лекціях
+## noba-history
 
-Кожен блок має тип знання та sourceIds. Педагогічні приклади й кейси вигадані; їхні числа не є результатами реального дослідження.
+David B. Baker, Heather Sperry. Рік не уточнено. **History of Psychology**. Noba / DEF Publishers
+
+[Сторінка джерела](https://nobaproject.com/modules/history-of-psychology)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто вступ, фізіологію й психофізику, становлення лабораторної психології та школи. Огляд переважно історії США, не повна світова історія.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-psychology-history.
+
+## os-history
+
+Rose M. Spielman, William J. Jenkins, Marilyn D. Lovett. 2020. **Psychology 2e, §1.2 History of Psychology**. OpenStax
+
+[Сторінка джерела](https://openstax.org/books/psychology-2e/pages/1-2-history-of-psychology)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто розділи про Вундта, Джеймса, гештальт, поведінкові й когнітивні напрями. Спрощений історичний огляд не підміняє першоджерел.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-psychology-history.
+
+## noba-memory
+
+Kathleen B. McDermott, Henry L. Roediger III. Рік не уточнено. **Memory (Encoding, Storage, Retrieval)**. Noba / DEF Publishers
+
+[Сторінка джерела](https://nobaproject.com/modules/memory-encoding-storage-retrieval)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто різновиди пам’яті, кодування, збереження, відтворення та помилки. Наведені в курсі ситуації авторські; історичне «7» не подано як універсальну межу.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-psychology-history, ay1-mental-processes, ay1-consciousness.
+
+## noba-emotion
+
+Hyisung Hwang, David Matsumoto. Рік не уточнено. **Functions of Emotions**. Noba / DEF Publishers
+
+[Сторінка джерела](https://nobaproject.com/modules/functions-of-emotions)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто компоненти й особистісні, міжособистісні та культурні функції емоцій. Еволюційні тлумачення не подаються як доведена причина кожного прояву.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-emotion-motivation.
+
+## os-emotion
+
+Rose M. Spielman, William J. Jenkins, Marilyn D. Lovett. 2020. **Psychology 2e, §10.1 Motivation; §10.4 Emotion**. OpenStax
+
+[Сторінка джерела](https://openstax.org/books/psychology-2e/pages/10-4-emotion)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто розділи про компоненти емоцій, історичні моделі та визначення внутрішньої/зовнішньої мотивації. Універсальна послідовність компонентів не стверджується.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-emotion-motivation.
+
+## noba-consciousness
+
+Ken Paller, Satoru Suzuki. Рік не уточнено. **Consciousness**. Noba / DEF Publishers
+
+[Сторінка джерела](https://nobaproject.com/modules/consciousness)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто визначення, перспективи першої/третьої особи й дослідження усвідомлюваної та неусвідомлюваної обробки. Це вступ, не підтвердження однієї остаточної теорії свідомості.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-mental-processes, ay1-consciousness.
+
+## bc-measurement
+
+I-Chant A. Chiang, Rajiv S. Jhangiani, Paul C. Price. Рік не уточнено. **Research Methods in Psychology – 2nd Canadian Edition: Reliability and Validity of Measurement**. BCcampus
+
+[Сторінка джерела](https://opentextbc.ca/researchmethods/chapter/reliability-and-validity-of-measurement/)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто розділи про повторні вимірювання, внутрішню узгодженість, згоду оцінювачів і валідність. Умовні числові пороги підручника не подаються як універсальні.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-emotion-motivation, ay1-consciousness, ay1-measurement, ay1-uncertainty, ay1-argument.
+
+## noba-statistics
+
+Beth Chance, Allan Rossman. Рік не уточнено. **Statistical Thinking**. Noba / DEF Publishers
+
+[Сторінка джерела](https://nobaproject.com/modules/statistical-thinking)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто вибірку, випадковий розподіл, статистичну невизначеність і межі узагальнення. Авторські числові приклади курсу вигадані.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-research-design, ay1-measurement, ay1-uncertainty.
+
+## asa-pvalues
+
+American Statistical Association. 2016. **American Statistical Association Releases Statement on Statistical Significance and P-Values**. American Statistical Association
+
+[Сторінка джерела](https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf)
+
+- Існування: `verified`.
+- Доступ: `full_text_available`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Прочитано пресреліз ASA від 7 березня 2016 з шістьма принципами. Це саме доступний пресреліз; повна журнальна заява не оголошується прочитаною.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-uncertainty, ay1-replication, ay1-argument.
+
+## osc-replication
+
+Open Science Collaboration. 2015. **Estimating the reproducibility of psychological science**. Science / Edinburgh Research Explorer DOI: 10.1126/science.aac4716
+
+[Сторінка джерела](https://www.pure.ed.ac.uk/ws/files/21474290/RPP.pdf)
+
+- Існування: `verified`.
+- Доступ: `full_text_available`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто анотацію, вступ і опис рамки добору/протоколу в авторській версії; усі 85 сторінок і додатки не прочитані. 100 досліджень із трьох журналів не репрезентують усю психологію.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-replication, ay1-argument.
+
+## cochrane-meta
+
+Jonathan J. Deeks, Julian P. T. Higgins, Douglas G. Altman, Joanne E. McKenzie, Areti Angeliki Veroniki, Mark Simmonds. 2026. **Cochrane Handbook, Chapter 10: Analysing data and undertaking meta-analyses**. Cochrane
+
+[Сторінка джерела](https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-10)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто Key Points та вступ §10.1–10.2. Сторінка зазначає оновлення листопадом 2026, version 6.5.1. Не заявлено читання всіх статистичних підрозділів.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-replication.
+
+## noba-scientist
+
+Erin I. Smith. Рік не уточнено. **Thinking like a Psychological Scientist**. Noba / DEF Publishers
+
+[Сторінка джерела](https://nobaproject.com/modules/thinking-like-a-psychological-scientist)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто вступ, цілі та розмежування наукового/повсякденного мислення; наступний запит до середини сторінки завершився помилкою. Не вважається повністю прочитаним розділом.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-argument.
+
+## noba-judgment
+
+Max H. Bazerman. Рік не уточнено. **Judgment and Decision Making**. Noba / DEF Publishers
+
+[Сторінка джерела](https://nobaproject.com/modules/judgment-and-decision-making)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто вступ і тематичні розділи про обмежену раціональність та упередження. Упередження не трактуються як особистісні діагнози.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-argument.
+
+## yale-perception
+
+Paul Bloom. 2007. **PSYC 110, Lecture 7: Language (cont.); Vision and Memory**. Yale University
+
+[Сторінка джерела](https://oyc.yale.edu/psychology/psyc-110/lecture-7)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто сторінку, розділи й текстовий супровід вибраних частин про сприйняття, увагу й пам’ять. Архівний курс 2007; старі спрощення не прирівнюються до сучасного консенсусу.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-mental-processes, ay1-consciousness.
+
+## yale-memory
+
+Paul Bloom. 2007. **PSYC 110, Lecture 8: Vision and Memory (cont.)**. Yale University
+
+[Сторінка джерела](https://oyc.yale.edu/psychology/psyc-110/lecture-8)
+
+- Існування: `verified`.
+- Доступ: `selected_sections`; прочитаність: `selected_sections`.
+- Змістова звірка: `selected_claims_checked`; дата: 2026-11-09.
+- Переглянуто сторінку та вибрані частини текстового супроводу про відтворення й навіювання. Відео не відтворювалося інструментом.
+- Посилання та самостійний український виклад. Текст, таблиці й зображення джерела не передруковуються.
+- Пов’язані уроки: ay1-mental-processes.
+
+## Карта тверджень у наповнених лекціях
+
+Кожен блок має тип знання та sourceIds. Прикладові числа й персонажі вигадані. Список джерел показує підстави для звірки, а не незалежне схвалення авторського формулювання.
 
 ### Чим відрізняються факт, гіпотеза й інтерпретація?
 
@@ -296,6 +491,160 @@ Deborah L. Cabaniss, Sabrina Cherry, Carolyn J. Douglas, Anna Schwartz. 2016. **
 | Психодинамічна перспектива | theory | freud-lectures |
 | Когнітивна й дослідницька перспективи | method | os-methods |
 | Що саме перевірено в джерелах | method | os-methods, noba-design |
+| Як перевірюваність обмежує інтерпретацію | method | os-methods, noba-design |
+
+### Предмет психології та історія наукових пояснень
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Предмет дисципліни та одиниця аналізу | method | os-methods |
+| Від філософського питання до вимірювання | historical | noba-history, os-history |
+| Структура досвіду, функція й цілісність | historical | os-history |
+| Поведінка та умови навчання | historical | os-history, noba-design |
+| Когнітивне пояснення й обмеження метафор | theory | os-history, noba-memory |
+| Психоаналітичний і гуманістичний запити | theory | freud-lectures, os-history |
+| Історія не є драбинкою до однієї істини | method | noba-history, os-methods |
+| Метод і суспільні умови виробництва знання | historical | noba-history, os-history |
+| Різні питання до того самого мовчання | theory | os-history, freud-lectures |
+| Біологічний та соціальний рівні | method | noba-design |
+| Історичний огляд і дослідження виконують різну роботу | historical | noba-history, os-history |
+| Підтверджена віха й оцінка школи | historical | noba-history, os-history |
+
+### Сприйняття, увага, пам’ять і мислення
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Від стимулу до організованого досвіду | method | yale-perception |
+| Увага як добір для поточного завдання | method | yale-perception |
+| Робоча пам’ять і спосіб організації | method | noba-memory, yale-memory |
+| Кодування, збереження й відтворення | method | noba-memory |
+| Реконструкція та помилки пам’яті | method | noba-memory, yale-memory |
+| Мислення як побудова й перевірка уявлень | theory | os-methods, noba-memory |
+| Взаємодія процесів і межі перенесення | method | noba-memory, os-methods |
+| Упевненість, точність і метакогнітивний контроль | method | noba-memory, yale-memory |
+| Когнітивний механізм та психодинамічне значення | theory | noba-memory, freud-lectures |
+| Нейронний і функціональний описи | method | noba-consciousness |
+| Які дані підтримують карту процесів | method | noba-memory, yale-perception, yale-memory |
+| Відтворення не дорівнює незмінному запису | empirical | noba-memory, yale-memory |
+
+### Емоції та мотивація: рівні пояснення
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Емоція — узгоджений опис кількох компонентів | method | os-emotion |
+| Емоція, настрій і оцінювання значущості | theory | os-emotion, noba-emotion |
+| Історичні моделі ставлять різні питання | historical | os-emotion |
+| Готовність до дії не визначає поведінки | method | noba-emotion |
+| Мотивація: напрям, підтримання та конфлікт цілей | theory | os-emotion |
+| Соціальний сигнал і культурний контекст | method | noba-emotion |
+| Від емоції до психодинамічної гіпотези | theory | freud-lectures, noba-emotion, os-methods |
+| Регуляція й оцінка її наслідків | method | os-emotion, noba-emotion |
+| Функціональна й оцінювальна перспективи | theory | noba-emotion, os-emotion |
+| Психодинамічне та соціальне пояснення | theory | freud-lectures, noba-emotion |
+| Що показує кожен показник | method | os-emotion, noba-emotion, bc-measurement |
+| Спільні компоненти не встановлюють єдиної причини | theory | os-emotion, noba-emotion |
+
+### Свідомість і значення несвідомого
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Про що запитують дослідники свідомості | method | noba-consciousness |
+| Перша й третя особа | philosophical | noba-consciousness, bc-measurement |
+| Автоматичність і доступність звіту | method | noba-consciousness, yale-perception |
+| Динамічне несвідоме як теоретичний термін | theory | freud-lectures, os-freud |
+| Увага та усвідомлення: близькі питання, різні процедури | method | yale-perception, noba-consciousness, noba-memory |
+| Нейронний корелят і причинне пояснення | method | noba-consciousness, os-methods |
+| Межі теорій та інтелектуальна свобода | disputed | noba-consciousness, freud-lectures, os-methods |
+| Критерій відповіді й контрольні умови | method | noba-consciousness, bc-measurement |
+| Когнітивний і психоаналітичний словники | theory | noba-consciousness, freud-lectures |
+| Феноменологічне й експериментальне запитання | philosophical | noba-consciousness |
+| Що встановлює процедура | method | noba-consciousness, yale-perception |
+| Вимірюваний результат і невирішене пояснення | disputed | noba-consciousness, freud-lectures |
+
+### Експеримент, кореляція, поздовжні й якісні дизайни
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Починай із запитання, а не з улюбленого методу | method | noba-design, os-methods |
+| Кореляційний дизайн: зв’язок без автоматичної причини | method | noba-design |
+| Експеримент: змінювати визначену умову | method | noba-design, noba-statistics |
+| Добір і розподіл — різні випадкові процедури | method | noba-statistics |
+| Час у поздовжньому дослідженні | method | noba-design |
+| Якісне дослідження й прозорість інтерпретації | method | noba-design |
+| Контроль упереджень і професійні межі | ethical | os-methods, noba-design |
+| Між людьми й усередині однієї людини | method | noba-design, os-methods |
+| Експериментальне й якісне питання | method | noba-design |
+| Клінічна історія й перевірка узагальнення | method | freud-lectures, os-methods |
+| Висновок визначається процедурою | method | noba-design, noba-statistics |
+| Що саме підтримує причинний висновок | method | noba-design, noba-statistics |
+
+### Операціоналізація, валідність і надійність
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Поняття, індикатор і процедура | method | bc-measurement, os-methods |
+| Надійність залежить від того, що повторюють | method | bc-measurement |
+| Систематична помилка й випадкові коливання | method | bc-measurement |
+| Валідність — аргумент про інтерпретацію | method | bc-measurement |
+| Критерій теж може бути недосконалим | method | bc-measurement, noba-statistics |
+| Мова, культура та порівнянність | method | bc-measurement, os-methods |
+| Вимірювання теоретичних понять | theory | freud-lectures, bc-measurement, os-methods |
+| Шкала й правила порівняння | method | bc-measurement, os-methods |
+| Психометричний і клініко-теоретичний запити | method | bc-measurement, freud-lectures |
+| Кількісне й якісне кодування | method | bc-measurement, noba-design |
+| Докази стосуються конкретного використання | method | bc-measurement |
+| Надійний результат може мати слабке тлумачення | method | bc-measurement |
+
+### Ефект, базова частота, невизначеність і конфаундинг
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Показник і розкид | method | noba-statistics |
+| Величина ефекту та практичне значення | method | noba-statistics, asa-pvalues |
+| Вибіркова мінливість і довірчий інтервал | method | noba-statistics, asa-pvalues |
+| Що p-значення не говорить | method | asa-pvalues |
+| Базова частота й природні кількості | method | noba-statistics |
+| Кореляція, змішування й відбір | method | noba-design, noba-statistics, bc-measurement |
+| Як читати числовий висновок | method | noba-statistics, asa-pvalues |
+| Абсолютна й відносна зміна | method | noba-statistics, noba-design |
+| Частотне й байєсівське питання | method | asa-pvalues, noba-statistics |
+| Число та клінічне значення | method | noba-statistics |
+| Обмеження опрацьованих джерел | method | noba-statistics, asa-pvalues |
+| Що означає p-значення за припущень моделі | method | asa-pvalues, noba-statistics |
+
+### Реплікація, систематичний огляд і метааналіз
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Чому одиничного результату недостатньо | method | osc-replication |
+| Пряме повторення й перевірка меж | method | osc-replication, os-methods |
+| Публікаційний добір і аналітична гнучкість | method | osc-replication, asa-pvalues |
+| Що підтримує прозорість | method | osc-replication, os-methods |
+| Приклад великого проєкту та його межі | method | osc-replication |
+| Систематичний огляд і метааналіз | method | cochrane-meta |
+| Неоднорідність і висновок для конкретної ситуації | method | cochrane-meta |
+| Вага дослідження й підсумкова оцінка | method | cochrane-meta |
+| Відкрита наука й критика окремої теорії | method | osc-replication, os-methods |
+| Кількісний синтез і змістова несумісність | method | cochrane-meta |
+| Реальне дослідження і вступний методологічний посібник | method | osc-replication, cochrane-meta |
+| Що дозволяє стверджувати проєкт OSC | empirical | osc-replication |
+
+### Аргументація, упередження та наукова доброчесність
+
+| Блок | Тип | Підстави для звірки |
+|---|---|---|
+| Аргумент має структуру | method | noba-scientist, os-methods |
+| Форма й істинність засновків | method | noba-scientist, os-methods |
+| Індукція та найкраще пояснення | method | noba-scientist, noba-design |
+| Колове пояснення й захист від заперечення | method | freud-lectures, os-methods |
+| Помилки аргументації та помилки судження | method | noba-judgment, noba-scientist |
+| Найсильніша версія чужої позиції | ethical | noba-scientist, os-methods |
+| Доброчесність і перегляд власного висновку | ethical | noba-scientist, osc-replication, asa-pvalues |
+| Калібрування впевненості й межа висновку | method | noba-scientist, noba-judgment, bc-measurement |
+| Наукова критика й філософська позиція | philosophical | noba-scientist |
+| Інтерпретація та перевірюване пояснення | theory | freud-lectures, os-methods |
+| Рівні підстав | method | noba-scientist, noba-judgment |
+| Логічна чинність і психологічні дані | philosophical | noba-scientist, noba-judgment |
 
 ### Що таке психоаналіз і як він пояснює психіку людини?
 
@@ -330,8 +679,91 @@ Deborah L. Cabaniss, Sabrina Cherry, Carolyn J. Douglas, Anna Schwartz. 2016. **
 | Класифікаційна й пояснювальна перспективи | clinical_description | who-cddr, os-methods |
 | Межа опрацьованих матеріалів | clinical_description | who-release, who-cddr, os-clinical, cabaniss-initial-formulation |
 
-## Невирішене
+## Відео Модуля 1: точні сторінки й межі перевірки
 
-APA: доступ інструментом не отримано. NICE NG222: HTTP 403; актуальність редакції не встановлена, лікувальних рекомендацій за нею не додано. PubMed для Dunlosky: інструмент повернув службову сторінку замість змісту; повний текст і DOI не верифіковано, не використано як прочитаний огляд. WHO CDDR: бібліографічна сторінка доступна; завантаження повного PDF завершилося тайм-аутом. IPA-довідник перевірено як навігацію, його словникові статті не оголошуються прочитаними.
+10 основних + 1 додаткове. Усі англійською; кожне має власний український путівник, ключові ідеї та три питання. Пошук україномовних ресурсів, зокрема Prometheus, дав огляди курсів, але не достатньо перевірених конкретних відео для цих тем; їх не підставлено замість відео. Вибір не претендує на вичерпний огляд усіх українських лекцій.
 
-Для решти тем потрібні конкретні першоджерела, незалежні критичні огляди, емпіричні синтези й сучасні дослідження. Зокрема, ще не завершені бібліографії Юнга, Адлера, Лакана, Мітчелла, Когута, Кернберга, Бека, Роджерса, Поппера й Куна.
+Офіційні сторінки видавців підтверджують відповідність назв і конкретних відеопосилань; вибраний текстовий супровід використано для оцінки відповідності темі. Nerdfighteria — спільнотний архів, не наукове першоджерело. Плеєри YouTube не відтворювалися; пряме відкриття частини YouTube URL інструментом завершувалося cache miss. Отже, playbackStatus залишається not_tested. Субтитри, геодоступність, повний аудіовізуальний зміст і подальша доступність потребують ручної перевірки.
+
+### Відео до «Чим відрізняються факт, гіпотеза й інтерпретація?»
+
+- **Основне: [Psychological Research: Crash Course Psychology #2](https://www.youtube.com/watch?v=hFV71QPvX2I)** — Hank Green; Crash Course / Complexly; англійська; приблизно 11 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/psychological-research-crash-course-psychology-2/); [текстовий супровід](https://nerdfighteria.info/v/hFV71QPvX2I/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Це короткий вступ. Він не замінює аналіз валідності й не дає безпомилкового алгоритму дослідження.
+
+### Відео до «Предмет психології та історія наукових пояснень»
+
+- **Основне: [Intro to Psychology: Crash Course Psychology #1](https://www.youtube.com/watch?v=vo4pMVb0R6M)** — Hank Green; Crash Course / Complexly; англійська; приблизно 11 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/intro-to-psychology-crash-course-psychology-1/); [текстовий супровід](https://nerdfighteria.info/v/vo4pMVb0R6M/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Відео швидко узагальнює європейсько-американський канон; це не повна світова або українська історія.
+
+### Відео до «Сприйняття, увага, пам’ять і мислення»
+
+- **Основне: [PSYC 110, Lecture 7: Language (cont.); Vision and Memory](https://www.youtube.com/watch?v=DmWrOUK2zgA)** — Paul Bloom; Yale University; англійська; приблизно 60 хв (орієнтир).
+- [Офіційна сторінка](https://oyc.yale.edu/psychology/psyc-110/lecture-7); [текстовий супровід](https://oyc.yale.edu/psychology/psyc-110/lecture-7).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість приблизна, за часовими позначками розділів.
+- Межа використання: Архівна лекція 2007 року. Короткі демонстрації не вимірюють загальні здібності; не всі історичні спрощення є сучасним консенсусом.
+
+- **Додаткове: [PSYC 110, Lecture 8: Vision and Memory (cont.)](https://oyc.yale.edu/psychology/psyc-110/lecture-8)** — Paul Bloom; Yale University; англійська; приблизно 55 хв (орієнтир).
+- [Офіційна сторінка](https://oyc.yale.edu/psychology/psyc-110/lecture-8); [текстовий супровід](https://oyc.yale.edu/psychology/psyc-110/lecture-8).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість приблизна, за часовими позначками розділів.
+- Межа використання: Архівний матеріал доповнює базові розрізнення. Історичні обговорення потрібно читати критично; жодних вправ на відновлення власних спогадів тут немає.
+
+### Відео до «Емоції та мотивація: рівні пояснення»
+
+- **Основне: [Feeling All the Feels: Crash Course Psychology #25](https://www.youtube.com/watch?v=gAMbkJk6gnE)** — Hank Green; Crash Course / Complexly; англійська; приблизно 11 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/feeling-all-the-feels-crash-course-psychology-25/); [текстовий супровід](https://nerdfighteria.info/v/gAMbkJk6gnE/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Історичні моделі подано стисло. Розпізнавання емоцій і регуляція потребують ширшого розгляду; це не детектор мотивів.
+
+### Відео до «Свідомість і значення несвідомого»
+
+- **Основне: [Consciousness: Crash Course Psychology #8](https://www.youtube.com/watch?v=jReX7qKU2yc)** — Hank Green; Crash Course / Complexly; англійська; приблизно 10 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/consciousness-crash-course-psychology-8/); [текстовий супровід](https://nerdfighteria.info/v/jReX7qKU2yc/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Короткий огляд не розв’язує філософської проблеми свідомості та не перевіряє специфічних психоаналітичних механізмів.
+
+### Відео до «Експеримент, кореляція, поздовжні й якісні дизайни»
+
+- **Основне: [Controlled Experiments: Crash Course Statistics #9](https://www.youtube.com/watch?v=kkBDa-ICvyY)** — Crash Course Statistics; Crash Course / Complexly; англійська; приблизно 12 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/controlled-experiments-crash-course-statistics-9/); [текстовий супровід](https://nerdfighteria.info/v/kkBDa-ICvyY/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Відео зосереджене на експерименті. Поздовжні та якісні дизайни вивчаються в самодостатньому тексті уроку.
+
+### Відео до «Операціоналізація, валідність і надійність»
+
+- **Основне: [Measuring Personality: Crash Course Psychology #22](https://www.youtube.com/watch?v=sUrV6oZ3zsk)** — Hank Green; Crash Course / Complexly; англійська; приблизно 11 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/measuring-personality-crash-course-psychology-22/); [текстовий супровід](https://nerdfighteria.info/v/sUrV6oZ3zsk/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Особистість — приклад проблеми вимірювання. Розповідь не є дозволом застосовувати тести до знайомих або виводити діагноз.
+
+### Відео до «Ефект, базова частота, невизначеність і конфаундинг»
+
+- **Основне: [Correlation Doesn’t Equal Causation: Crash Course Statistics #8](https://www.youtube.com/watch?v=GtV-VYdNt_g)** — Crash Course Statistics; Crash Course / Complexly; англійська; приблизно 12 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/correlation-doesnt-equal-causation-crash-course-statistics-8/); [текстовий супровід](https://nerdfighteria.info/v/GtV-VYdNt_g/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Це доповнення про причинність. p-значення, довірчі інтервали й базові частоти потрібно опрацювати в локальному тексті.
+
+### Відео до «Реплікація, систематичний огляд і метааналіз»
+
+- **Основне: [The Replication Crisis: Crash Course Statistics #31](https://www.youtube.com/watch?v=vBzEGSm23y8)** — Crash Course Statistics; Crash Course / Complexly; англійська; приблизно 15 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/the-replication-crisis-crash-course-statistics-31/); [текстовий супровід](https://nerdfighteria.info/v/vBzEGSm23y8/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Відео 2018 року використовує спрощення та вигадані ілюстративні числа. Не сприймай їх як результати всіх досліджень або актуальну оцінку всієї науки.
+
+### Відео до «Аргументація, упередження та наукова доброчесність»
+
+- **Основне: [How to Argue – Philosophical Reasoning: Crash Course Philosophy #2](https://www.youtube.com/watch?v=NKEhdsnKKHs)** — Hank Green; Crash Course / Complexly; англійська; приблизно 10 хв (метадані архіву).
+- [Офіційна сторінка](https://thecrashcourse.com/courses/how-to-argue-philosophical-reasoning-crash-course-philosophy-2/); [текстовий супровід](https://nerdfighteria.info/v/NKEhdsnKKHs/).
+- Звірка 2026-11-09: Зіставлено назву, автора/організацію й конкретне посилання на офіційній сторінці; переглянуто вибрані частини текстового супроводу. Відтворення відео інструментом не перевірене. Тривалість за метаданими текстового архіву; це не перевірка відтворення.
+- Межа використання: Логічний вступ не є емпіричною теорією мислення. Українські терміни логіки не слід змішувати з валідністю вимірювання.
+
+## Недоступне та незавершене
+
+APA: доступ не отримано. NICE NG222: HTTP 403; актуальність редакції не встановлена, лікувальних рекомендацій не додано. PubMed для Dunlosky: службова сторінка замість змісту; повний текст і DOI не верифіковані. WHO CDDR: оглядова сторінка доступна, повний PDF не завантажено через тайм-аут. IPA: перевірена навігація, не всі словникові статті.
+
+Для Модуля 1 прямі запити до Science, BMJ/PRISMA, PMC і частини інших сторінок були заблоковані або не дали тексту; вони не оголошені прочитаними джерелами. Для OSC використано доступну авторську версію Edinburgh Research Explorer; для вимірювання — відкритий BCcampus. Повні додатки OSC, повна журнальна заява ASA й усі підрозділи Cochrane не прочитані.
+
+Потрібні незалежна предметна ревізія всіх 12 текстів, перевірка українських відповідників і розширення сучасних оглядів для вузьких тем. Бібліографії решти 87 уроків не завершені.
