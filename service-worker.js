@@ -1,5 +1,5 @@
 // Change BUILD whenever an app-shell file changes.
-const BUILD = '2026-11-09-study-1';
+const BUILD = '2026-11-19-solo-1';
 const SCOPE = new URL(self.registration.scope);
 const PREFIX = 'rik-psykholohii:' + encodeURIComponent(SCOPE.pathname) + ':shell-';
 const CACHE_NAME = PREFIX + BUILD;
